@@ -1,0 +1,65 @@
+.cart-page {
+    .container {
+        min-height: calc(100vh - 5em - 6.58em);
+
+        .col-10 {
+            flex: 4;
+            border-right: $seperation;
+
+            .card {
+                display: flex;
+                padding: 0 2em;
+                margin-bottom: 1.4em;
+
+                .card-img {
+                    height: 9em;
+                    padding: .125em 1.35em;
+    
+                    img {
+                        height: 100%;
+                    }
+                }
+
+                .card-body {
+                    flex-basis: 80%;
+                    display: flex;
+
+                    .card-name-and-price {
+                        flex: 3;
+
+                        h5 {
+                            font-family: 'Univers', Verdana, Geneva, Tahoma, sans-serif;
+font-weight: 800;
+font-size: 1.1em;
+                        }
+                    }
+
+                    .card-quantity {
+                        flex: 1;
+                        align-self: center;
+                    }
+                }
+            }
+        }
+
+        .col-2 {
+            flex: 1;
+
+            > div:first-of-type {
+                height: 100%;
+                display: grid;
+
+                .checkout-btn {
+                    width: 100%;
+                    color: #fff;
+                    background-color: #000;
+                    display: block;
+                    text-align: center;
+                    padding: 1.2em;
+                    height: 3.5em;
+                    align-self: end;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,102 @@
+.home-page {
+    section {
+        border-bottom: $seperation;
+    }
+
+    .top-boxes {
+        display: flex;
+        flex-wrap: wrap;
+
+        .box {
+            height: 16em;
+            border: 1px solid #000;
+        }
+
+        .box-100 {
+            width: 100%;
+        }
+
+        .box-33 {
+            width: calc(100% / 3);
+        }
+    }
+
+    .categories {
+        ul {
+            display: flex;
+
+            li {
+                flex: 1;
+
+                img {
+                    max-height: 240px;
+                }
+            }
+
+            li:hover {
+                background-color: #000;
+                color: #fff;
+            }
+        }
+    }
+
+    .recommendations {
+        position: relative;
+        overflow: hidden;
+
+        .slidershow {
+            position: relative;
+display: flex;
+align-items: center;
+
+            nav {
+                z-index: 10;
+                display: block;
+position: absolute;
+            }
+
+            .nav-btn {
+                position: absolute;
+                background-color: #d9d5d5;
+                padding: 14px 6px;
+            }
+
+            .nav-btn.left {
+                left: 0;
+            }
+
+            .nav-btn.right {
+                right: 0;
+            }
+
+            ul {
+                display: flex;
+                padding-left: 0;
+                overflow: auto;
+                list-style-type: none;
+
+                .product-card {
+                    .image {
+                        img {
+                            max-height: 16em;
+                        }
+                    }
+
+                    .text-body {
+                        p {
+                            text-align: left;
+                            transform: translateY(-36px) translateX(-23px) rotateZ(-90deg);
+                            max-width: 100px;
+                        }
+
+                        h6 {
+                            text-align: left;
+                            margin-left: 1.5em;
+                            font-size: .9em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,91 @@
+.product-details-page {
+    .container {
+        .image-container {
+            height: calc(100vh - 5em);
+            padding-right: 2.3em;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        .details {
+            border-left: $seperation;
+
+            > div {
+                height: 100%;
+
+                form {
+                    display: grid;
+                    height: 100%;
+
+                    .produit-container {
+                        padding: 1em 4em;
+
+                        #nom-prd {
+                            text-align: left;
+                            color: #081C15;
+    display: flex;
+    justify-content: center;
+                        }
+
+                        .badge {
+                            padding: .6em 1.3em;
+                            background-color: #e4e1e1;
+                            color: #000;
+                            display: inline;
+                            text-transform: uppercase;
+                            font-family: 'Jerry';
+                            font-weight: 400;
+
+                        }
+
+                        .qty-container {
+
+                            input,
+                            button {
+                                background: none;
+                                border: none;
+                            }
+
+                            button {
+                                font-size: 1.6em;
+                            }
+
+                            input {
+                                text-align: center;
+                                width: 4em;
+                                font-size: 1.2em;
+                            }
+
+                            input::-webkit-outer-spin-button,
+                            input::-webkit-inner-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+
+                            input[type=number] {
+                                -moz-appearance: textfield;
+                            }
+                        }
+
+                        .prix-prd {
+                            font-weight: 200;
+                            font-size: 2.5em;
+                            margin-top: 0.5em;
+                        }
+                    }
+
+                    .add-to-cart {
+                        width: 100%;
+                        color: #fff;
+                        background-color: #000;
+                        border: none;
+                        border-radius: 0;
+                        padding: 1.05em 1.6em;
+                    }
+                }
+            }
+        }
+    }
+}

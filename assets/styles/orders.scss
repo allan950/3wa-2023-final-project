@@ -1,0 +1,175 @@
+.order {
+    display: grid;
+    width: 80%;
+    margin: auto;
+
+    .horizontal {
+        display: flex;
+
+        .item-list {
+            flex: 4;
+
+            .item {
+                display: flex;
+
+                > div:nth-of-type(1), > div:nth-of-type(3) {
+                    flex: 1;
+                }
+
+                > div:nth-of-type(2) {
+                    flex: 2;
+                    
+                    h5 {
+                        font-size: .9em;
+                    }
+                }
+
+                > div:nth-of-type(1) {
+                    align-self: center;
+                }
+
+                .horizontal {
+                    > * {
+                        flex: 1;
+                        font-size: .8em;
+                        font-weight: 200;
+
+                        b {
+                            font-size: 1.4em;
+                            font-weight: 400;
+                        }
+                    }
+                }
+
+                .total {
+                    h6 {
+                        font-size: 1em;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+
+        .totals {
+            h4, h5, h6 {
+                margin: 0;
+            }
+
+            strong {
+                font-size: 1.4em;
+            }
+
+            h5 {
+                font-size: 1.1em;
+            }
+
+            h6 {
+                font-size: .9em;
+                font-weight: 200;
+            }
+        }
+
+        .totals, .item .total {
+            flex: 1;
+            align-self: center;
+            text-align: center;
+        }
+    }
+}
+
+.modal {
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    background-color: white;
+    bottom: 0;
+    height: 80%;
+    width: 75%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    overflow: hidden;
+    display: grid;
+    box-shadow: #2d2a2a 0 0 10px;
+
+    header {
+        text-align: center;
+
+        h4 {
+            margin: 0;
+        }
+    }
+
+    header, > div {
+        padding: 2em;
+    }
+
+    > div {
+        overflow: auto;
+
+        ul {
+            margin: 0;
+
+        .item {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            column-gap: 0.9em;
+            margin-bottom: 1.1em;
+
+            > div:nth-of-type(1) {
+                flex: .5;
+                font-weight: 700;
+            }
+
+            > div:nth-of-type(2) {
+                flex: 1;
+            }
+
+            > div:nth-of-type(3) {
+                flex: 3;
+                text-align: left;
+
+                .horizontal {
+                    display: flex;
+
+                    > * {
+                        flex: 1;
+                        font-size: .8em;
+                        font-weight: 200;
+
+                        b {
+                            font-size: 1.4em;
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+
+            > div:nth-of-type(4) {
+                flex: 1;
+
+                b {
+                    font-size: 1.1em;
+                }
+            }
+        }
+    }
+    }
+
+    footer {
+        button {
+            width: 100%;
+        }
+    }
+}
+
+.backdrop {
+    position: fixed;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+}

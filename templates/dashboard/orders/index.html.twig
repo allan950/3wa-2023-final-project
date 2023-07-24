@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block body %}
+
+    {{ include('widgets/navbar/index.html.twig') }}
+
+    <h3 style="text-align: center;">Liste de vos commandes</h3>
+
+
+    {% if orders %}
+
+    <main>
+
+    <div class="container-xl">
+
+    {% for order in orders %}
+
+        <div class="order">
+  <div class="" style="display: flex;">
+    <div class="">
+    <p class="">Date de commande <b>{{order.orderDate|format_datetime()}}</b></p>
+    </div>
+  </div>
+  <div class="horizontal">
+    <div class="item-list">
+    {% for item in order.items|slice(0,2) %}
+    {# {% if loop.index < 2 %} #}
+    <div class="item">
+        <div class="">
+            <img src="{{item.image}}" alt="{{item.name}}" height="80">
+        </div>
+        <div class="">
+            <h5 class="">{{item.name}}</h5>
+            <div class="horizontal">
+                <p class="">Price <b>{{item.price|format_currency('EUR')}}</b></p>
+                <p class="">Quantity <b>{{item.quantity}}</b></p>
+            </div>
+        </div>
+        <div class="total">
+            <h6>{{(item.price * item.quantity)|format_currency('EUR')}}</h6>
+        </div>
+    </div>
+    {# {% endif %} #}
+
+    {% endfor %}
+
+    {% if order.items|length > 2 %}
+    <div style="text-align: center;"><button class="large-btn" onclick="openModal({{order.items|json_encode()}})" {# onclick="{% set modalItems = order.items %}" #}>See more</button></div>
+
+    {% endif %}
+  </div>
+  <div class="totals">
+    <div class="">
+        <h6>Sous-total</h6>
+        <h5>{{order.totalPriceHt|format_currency('EUR')}}</h5>
+    </div>
+    <br>
+    <br>
+    <div class="">
+        <h6>Total</h6>
+        <strong>{{order.totalPriceTtc|format_currency('EUR')}}</strong>
+    </div>
+  </div>
+  </div>
+</div>
+
+            {% if loop.index != loop.last %}
+            <hr>
+            {% endif %}
+
+
+        {% endfor %}
+
+        <br>
+        <br>
+
+
+        {# {% if  %} #}
+
+        {# <div class="modal" id="more-item-modal">
+        <header>
+            <h4>Liste complètes des produits</h4>
+        </header>
+        <div>
+            <ul>
+                {% for item in modalItems %}
+                <li>
+    <div class="item">
+        <div>
+            {{loop.index}}
+        </div>
+        <div class="">
+            <img src="{{item.image}}" alt="{{item.name}}" height="80">
+        </div>
+        <div class="">
+            <h5 class="">{{item.name}}</h5>
+            <div class="horizontal">
+                <p class="">Price <b>{{item.price|format_currency('EUR')}}</b></p>
+                <p class="">Quantity <b>{{item.quantity}}</b></p>
+            </div>
+        </div>
+        <div class="total">
+            <h6>{{(item.price * item.quantity)|format_currency('EUR')}}</h6>
+        </div>
+    </div>
+    </li>
+    {% endfor %}
+            </ul>
+        </div>
+    </div> #}
+        {# {% endif %} #}
+
+
+
+        <script>
+        function openModal(items) {
+            const modal = document.getElementById('more-item-modal');
+
+            //modal.classList.add("open");
+
+            console.log(items);
+
+            function generateModal(items) {
+                let modal = `
+                <div class="modal" id="more-item-modal">
+        <header>
+            <h4>Complete product list</h4>
+        </header>
+        <div>
+            <ul>`;
+
+                for (let i in items) {
+                    modal += `
+                        <li>
+    <div class="item">
+        <div>
+            <b>${parseInt(i)+1}</b>
+        </div>
+        <div class="">
+            <img src="${items[i].image}" alt="${items[i].name}" height="80">
+        </div>
+        <div class="">
+            <h5 class="">${items[i].name}</h5>
+            <div class="horizontal">
+                <p class="">Price <b>&euro;${items[i].price.toFixed(2)}</b></p>
+                <p class="">Quantity <b>${items[i].quantity}</b></p>
+            </div>
+        </div>
+        <div class="total">
+            <b>&euro;${(items[i].price * items[i].quantity).toFixed(2)}</b>
+        </div>
+    </div>
+    </li>
+                    `;
+                }
+            modal += `</ul>
+        </div>
+        <footer>
+            <button class="large-btn" onclick="document.getElementById('more-item-modal').remove();document.getElementsByClassName('backdrop')[0].remove()">Close</button>
+        </footer>
+    </div>
+    <div class="backdrop"></div>
+    `;
+
+            return modal;
+            }
+
+            console.log(document.getElementsByTagName('main')[0]);
+
+            document.getElementsByTagName('main')[0].innerHTML += generateModal(items);
+        }
+    </script>
+
+
+
+        </div>
+    </main>
+
+    {% endif %}
+{% endblock %}

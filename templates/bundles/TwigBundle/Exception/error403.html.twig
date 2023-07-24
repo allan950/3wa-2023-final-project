@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}erreur 403{% endblock %}
+{% block body %}
+<div>
+    <h1>Erreur<br>403</h1>
+    <div style="text-align: center">
+    Vous n'avez pas accès à cette partie du site!<br />
+    Retour à l'accueil <a href="{{path('home')}}">ici</a>
+    </div>
+</div>
+
+{% endblock %}

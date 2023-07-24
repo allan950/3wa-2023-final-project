@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Catalogue
+{% endblock %}
+
+{% block body %}
+
+{% include('widgets/navbar/index.html.twig') %}
+
+<main class="product-list-page">
+<h2 id="ncata">Notre Catalogue</h2>
+
+        <div class="flex">
+            <aside>
+            <div>
+
+                <form action="{{ path('app_product_list_filtered') }}">
+
+                <h5>Anime</h5>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="anime[]" id="category-onepiece" value="onepiece">
+                        <label for="category-onepiece">One Piece</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="anime[]" id="category-naruto" value="naruto">
+                        <label for="category-naruto">Naruto</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="anime[]" id="category-attack-on-titan" value="attack-on-titan">
+                        <label for="category-attack-on-titan">Attack on Titan</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="anime[]" id="category-death-note" value="death-note">
+                        <label for="category-death-note">Death Note</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="anime[]" id="category-bleach" value="bleach">
+                        <label for="category-bleach">Bleach</label>
+                    </li>
+                </ul>
+
+                <br>
+
+                <h5>Category</h5>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="category[]" id="category-tshirt" value="t-shirt">
+                        <label for="category-tshirt">T-shirt</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="category[]" id="category-sweatshirt" value="sweatshirt">
+                        <label for="category-sweatshirt">Sweatshirt</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="category[]" id="category-socks" value="socks">
+                        <label for="category-socks">Socks</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="category[]" id="category-hat" value="hat">
+                        <label for="category-hat">Hat</label>
+                    </li>
+                </ul>
+
+                <br>
+
+                <h5>Price</h5>
+                
+                <div class="row">
+                    <div class="column">
+                        <label for="min-price">Min Price</label>
+                        <input type="number" id="min-price" name="min-price" min="1.00" max="60.00" step="1.00">
+                    </div>
+                    <div class="column">
+                        <label for="max-price">Max Price</label>
+                        <input type="number" id="max-price" name="max-price" min="1.00" max="60.00" step="1.00">
+                    </div>
+                </div>
+
+                <br>
+
+                <button type="submit" class="large-btn">Apply Filter</button>
+
+                </form>
+                
+                </div>
+            </aside>
+
+        <ul class="product-list">
+            {% for product in products %}
+        <li>
+        <a href="{{ path("app_product", { "id": product.id}) }}">
+            <div class="structure">
+                <div class="img-box">
+                    <img src= {{product.urlimg}}>
+                </div>
+                <div class="text-body">
+                    <p>{{product.price|format_currency('EUR')}}</p>
+                    <h6>{{product.name}}</h6>
+                </div>
+            </div>
+            </a>
+        </li>
+        {% endfor %}
+        </ul>
+        </div>
+</main>
+    
+{% endblock %}

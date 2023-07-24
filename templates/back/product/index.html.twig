@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+
+<div class="admin-page">
+
+<div style="min-height: 100vh">
+{{ include('back/index.html.twig') }}
+</div>
+
+    <div class="content">
+
+    <div>
+
+    <section class="metrics">
+        <div class="count">
+            <div class="label"><b>Number of products</b></div>
+            <div class="output"><span>{{products | length}}</span></div>
+        </div>
+    </section>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+            <tr class="filters">
+                <form action="{{ path('app_admin_product_list_search') }}">
+                    <th></th>
+                    <th>
+                        <input type="text" name="id" placeholder="">
+                    </th>
+                    <th>
+                        <input type="text" name="name" placeholder="">
+                    </th>
+                    <th>
+                        <input type="text" name="desc" placeholder="">
+                    </th>
+                    <th>
+                        <input type="text" name="price" placeholder="">
+                    </th>
+                    <th>
+                        <select name="category" id="">
+                            <option value="all">All</option>
+                            <option value="t-shirt">T-shirt</option>
+                            <option value="sweatshirt">Sweatshirt</option>
+                            <option value="socks">Socks</option>
+                            <option value="hat">Hat</option>
+                        </select>
+                    </th>
+                    <th>
+                        <button type="submit" style="width: initial;">search</button>
+                    </th>
+                </form>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td><img src="{{product.urlimg}}" height="55" alt=""></td>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description|u.truncate(50, '...') }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.category }}</td>
+                <td>
+                    <a href="{{ path('app_admin_product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_product_new') }}">Create new</a>
+</div>
+    </div>
+    </div>
+{% endblock %}

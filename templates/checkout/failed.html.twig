@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CheckoutController!{% endblock %}
+
+{% block body %}
+
+   <main style="display: grid; align-items: center;height: 100vh;">
+   <div style="text-align: center;">
+        <div>
+            <h3>Le paiement de votre commande n'a pas abouti!</h3>
+        </div>
+        <p>Vous allez maintenant être redirigé vers votre panier</p>
+        <a href="{{path('app_cart')}}">OK</a>
+        </div>
+   </main>
+
+{% endblock %}

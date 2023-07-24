@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order index{% endblock %}
+
+{% block body %}
+
+
+<div class="admin-page">
+
+<div>
+{{ include('back/index.html.twig') }}
+</div>
+
+    <div class="content">
+
+    <div>
+
+
+    <h1>Order index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Client</th>
+                <th>Order_date</th>
+                <th>Total_price_ht</th>
+                <th>Total_price_ttc</th>
+                {# <th>Items</th> #}
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.client.email }}</td>
+                <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ order.totalPriceHt }}</td>
+                <td>{{ order.totalPriceTtc }}</td>
+                {# <td>{{ order.items ? order.items|join(', ') : '' }}</td> #}
+                <td>
+                    <a href="{{ path('app_admin_order_show', {'id': order.id}) }}">show</a>
+                    {# <a href="{{ path('app_admin_order_edit', {'id': order.id}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_admin_order_new') }}">Create new</a> #}
+
+
+</div>
+    </div>
+    </div>
+
+{% endblock %}

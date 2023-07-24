@@ -1,0 +1,119 @@
+.product-list-page {
+
+    .flex {
+        display: flex;
+
+        aside {
+            flex: 1;
+
+            > div {
+                padding: 1.2em 2.2em;
+
+                ul {
+                    display: block;
+                }
+
+                input[type=checkbox] {
+                    vertical-align: bottom;
+                }
+
+                .row {
+                    display: flex;
+
+                    .column {
+                        display: block;
+
+                        label {
+                            font-size: .8em;
+                        }
+
+                        input[type=number] {
+                            width: 6em;
+                            padding: .625em 1.25em;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        ul.product-list {
+            display: flex;
+            flex-wrap: wrap;
+            flex: 4;
+
+            li {
+                flex-grow: 0;
+                flex-shrink: 1;
+                /* flex-basis: 100%; */
+                width: 0;
+                background-color: #fff;
+
+                .structure {
+                    position: relative;
+
+                    .img-box {
+                        /* max-height: 300px; */
+                        min-width: 248px;
+
+                        img {
+                            max-height: 100%;
+                            max-width: 100%;
+                            padding: 0.7em;
+                        }
+                    }
+
+                    .text-body {
+                        p {
+                            margin: 0;
+                            transform: rotateZ(-90deg) translate(50px, -20px);
+                            max-width: 4.1em;
+                        }
+
+                        h6 {
+                            margin: 0;
+                            font-size: .9em;
+                            margin-left: 0.3em;
+                            transform: translateY(-15px);
+                            font-family: 'Univers';
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 459px) {
+    .product-list-page {
+        li {
+            flex-basis: 100% !important;
+        }
+    }
+}
+
+@media only screen and (min-width: 460px) {
+    .product-list-page {
+        li {
+            flex-basis: 50% !important;
+        }
+    }
+}
+
+
+@media only screen and (min-width: 790px) {
+    .product-list-page {
+        li {
+            flex-basis: 33% !important;
+        }
+    }
+}
+
+@media only screen and (min-width: 1120px) {
+    .product-list-page {
+        li {
+            flex-basis: 25% !important;
+        }
+    }
+}

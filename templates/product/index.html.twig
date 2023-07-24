@@ -1,0 +1,72 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}
+    {{product.name}}
+{% endblock %}
+
+{% block body %}
+
+    {# {% javascripts
+        '../public/product-list.js'
+
+        filter='?uglifyjs2'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %} #}
+
+    {% include('widgets/navbar/index.html.twig') %}
+
+    <main class="product-details-page">
+        <div class="container">
+            <div class="image-container">
+                <img src= {{product.urlimg}}>
+            </div>
+            <div class="details">
+                <div>
+                <form action="{{ path('app_add_product_to_cart', {'id': product.id}) }}" method="post">
+                    <div class="produit-container">
+                        <h2 id="nom-prd">{{product.name}}</h2>
+                        <div class="badge">
+                            <span>T-shirt</span>
+                        </div>
+                        <p id="desc-prd">{{product.description}}</p>
+                        <div class="input-group qty-container">
+                            {# <button class="btn btn-outline-secondary" id="decrement-button">-</button> #}
+                            {# <input type="number" class="form-control" name="itemQuantity" value="1" min="1"> #}
+                            {# <button class="btn btn-outline-secondary" id="increment-button">+</button> #}
+                            <button type="button" onClick="updateQty(false)">
+                                <i class="fa-solid fa-minus" id="increment-qty"></i>
+                            </button>
+                            <input type="number" class="form-control" name="itemQuantity" id="qty-textbox" value="1" min="1">
+                            <button type="button" onClick="updateQty(true)">
+                                <i class="fa-solid fa-plus" id="decrement-qty"></i>
+                            </button>
+                        </div>
+                        <p class="prix-prd">{{product.price|format_currency('EUR')}}</p>                 
+                    </div>
+                    <input type="submit" class="add-to-cart add" value="Ajouter au panier">
+                    </form>
+                <div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const qty = document.getElementById('qty-textbox');
+
+        function updateQty(isInc) {
+            let val = qty.value;
+
+            if (qty.value > 0 && qty.value <= 10) {
+                if (isInc && qty.value < 10) {
+                    val = parseInt(qty.value) + 1;
+                }
+                else if (!isInc && qty.value > 1) {
+                    val = parseInt(qty.value) - 1;
+                }
+
+                document.getElementById('qty-textbox').value = val;
+            }
+        }
+    </script>
+{% endblock %}

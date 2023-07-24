@@ -1,0 +1,106 @@
+$inputSize: 355px;
+
+
+
+input[type=text], input[type=email], input[type=password], input[type=number], select {
+    border: 1px solid #000;
+    border-radius: 0;
+    background-color: white;
+}
+
+.row.btn {
+    display: grid;
+    justify-items: center;
+    padding-top: 2em;
+}
+
+section.container {
+    width: 60%;
+    display: block;
+    margin: auto;
+    
+    form {
+        width: 100%;
+    
+        .row {
+            display: grid;
+        
+            label {
+                margin-bottom: .45em;
+                text-align: left;
+            }
+    
+            input {
+                margin-bottom: 1.325em;
+                padding: .925em 1.75em;
+            } 
+        }
+    }
+}
+
+.login-page {
+    position: relative;
+
+    [type=submit] {
+        width: 355px;
+    border: none;
+    border-radius: 0;
+    padding: 1.05em 1.6em;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+height: 100vh;
+
+        .visual-design {
+            flex: 1;
+            height: 100%;
+            border-right: $seperation;
+            background-image: url('../images/login.jpg');
+            background-size: contain;
+
+            h1 {
+                display: none;
+            }
+        }
+
+        .spaced-out {
+            padding: 1.5em 1.2em;
+            flex: 1;
+
+            form {
+                display: grid;
+
+                h2 {
+                    text-align: center;
+                }
+    
+                .row {
+                    display: grid;
+    
+                    label {
+                        margin-bottom: .45em;
+                        text-align: left;
+                    }
+    
+                    input {
+                        margin-bottom: 1.325em;
+                        padding: .925em 1.75em;
+                    }
+
+                    label, input {
+                        justify-self: center;
+                        min-width: $inputSize;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    input {
+        width: 490px;
+    }
+}

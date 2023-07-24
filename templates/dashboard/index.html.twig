@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+
+    {{ include('widgets/navbar/index.html.twig') }}
+
+    <main>
+        <div class="dashboard-home">
+        <h2>Dashboard</h2>
+
+
+        <section>
+          <div class="option">
+            <a href="{{path('app_dashboard_info')}}">
+    <h5 class="card-title"><span>Informations</span> <span>Personelles</span></h5>
+</a>
+          </div>
+          <hr>
+          <div class="option">
+            <a href="{{path('app_dashboard_orders')}}">
+    <h5 class="card-title"><span>Commandes</span> <span>Passées</span></h5>
+</a>
+          </div>
+
+          {% if app.user and is_granted("ROLE_ADMIN") %}
+          <hr>
+          <div class="option">
+            <a href="{{path('app_admin_user_index')}}">
+    <h5 class="card-title"><span>Privilèges</span> <span>Administrateur</span></h5>
+</a>
+          </div>
+          {% endif %}
+        </section>
+
+    </main>
+{% endblock %}
