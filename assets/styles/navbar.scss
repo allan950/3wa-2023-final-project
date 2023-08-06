@@ -36,6 +36,10 @@ align-items: center;
         ul, p {
             margin: 0;
         }
+
+        .mobile-view-menu {
+            display: none;
+        }
     }
 
     .right-hand {
@@ -52,13 +56,51 @@ position: relative;
                 list-style: none;
                 color: black;
                 display: flex;
+                align-items: center;
     
                 li {
                     margin: 0 10px;
+
+                    .cart-badge {
+                        position: absolute;
+                        transform: translate(7px, -31px);
+background-color: #dcdadf;
+border-radius: 100%;
+width: 1.1em;
+height: 1.1em;
+display: flex;
+                        span {
+                            display: inline;
+margin: auto;
+font-size: .6265em;
+font-weight: 400;
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+.mobile-sidemenu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+
+    .centered {
+        text-align: center;
+        font-size: 2em;
+    }
+}
+
+.mobile-sidemenu.show {
+    display: grid;
 }
 
 @media only screen and (max-width: 768px) {
@@ -68,10 +110,11 @@ position: relative;
             flex: 1;
             order: 2;
             text-align: center;
+            justify-content: center;
     
             h2.logo {
                 line-height: .8em;
-                margin-left: 0;
+                margin: auto !important;
     
                 span {
                     display: block;
@@ -83,10 +126,23 @@ position: relative;
         .middle {
             flex: .5;
             order: 1;
+
+            ul {
+                display: none;
+            }
+
+            .mobile-view-menu {
+                display: block;
+            }
         }
     
         .right-hand {
             order: 3;
+            justify-content: center;
+
+            .side-options {
+                position: initial;
+            }
         }
     }
 }

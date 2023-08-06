@@ -39,10 +39,24 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function getOne(int $id): array|null {
+        return $this->createQueryBuilder('p')
+        ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category", "an.label AS anime"))
+        ->leftJoin("p.category", "ca")
+        ->leftJoin("p.anime", "an")
+        ->where("p.id = :id")
+        ->setParameter("id", $id)
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult()
+    ;
+    }
+
     public function getAllWithCategory(): array {
         return $this->createQueryBuilder('p')
-            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category"))
+            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category", "an.label AS anime"))
             ->leftJoin("p.category", "ca")
+            ->leftJoin("p.anime", "an")
             ->getQuery()
             ->getResult()
         ;
@@ -51,8 +65,9 @@ class ProductRepository extends ServiceEntityRepository
     public function queryFilteredList(int | null $id, string | null $name, float | null $price, string | null $label): array
     {
         $builder = $this->createQueryBuilder('p')
-            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category"))
+            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category", "an.label AS anime"))
             ->leftJoin("p.category", "ca")
+            ->leftJoin("p.anime", "an")
             ->where("1 = 1")
         ;
 
@@ -67,23 +82,31 @@ class ProductRepository extends ServiceEntityRepository
     public function filterProducts($params) {
 
         $builder = $this->createQueryBuilder('p')
-            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category"))
+            ->select(array("p.id", "p.name", "p.description", "p.price", "p.code", "p.urlimg", "ca.label AS category", "an.label AS anime"))
             ->leftJoin("p.category", "ca")
+            ->leftJoin("p.anime", "an")
             ->where("1 = 1")
         ;
 
-        if (!empty($params->all('category'))) {
+        if (!empty($params['anime'])) {
+            $anime = str_replace("-", " ", $params['anime']);
+            $builder->andWhere("an.label IN (:anime)")
+               ->setParameter("anime", $anime);
+           }
+
+        if (!empty($params['category'])) {
          $builder->andWhere("ca.label IN (:category)")
-            ->setParameter("category", $params->all('category'));
-        }
-        if (!empty($params->get('min-price'))) {
-            $builder->andWhere("p.price >= :minPrice")
-            ->setParameter("minPrice", $params->get('min-price'));
+            ->setParameter("category", $params['category']);
         }
 
-        if (!empty($params->get('max-price'))) {
+        if (!empty($params["minPrice"])) {
+            $builder->andWhere("p.price >= :minPrice")
+            ->setParameter("minPrice", $params["minPrice"]);
+        }
+
+        if (!empty($params["maxPrice"])) {
             $builder->andWhere("p.price <= :maxPrice")
-            ->setParameter("maxPrice", $params->get('max-price'));
+            ->setParameter("maxPrice", $params["maxPrice"]);
         }
 
         return $builder->getQuery()->getResult();

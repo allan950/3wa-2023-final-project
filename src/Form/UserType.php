@@ -33,7 +33,6 @@ class UserType extends AbstractType
             ->add('lastName')
             ->add('address')
             ->add('zipcode')
-            ->add('baskets')
         ;
     }
 

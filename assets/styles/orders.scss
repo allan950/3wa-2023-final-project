@@ -173,3 +173,57 @@
     top: 0;
     bottom: 0;
 }
+
+@media only screen and (max-width: 768px) {
+    .order {
+        padding: 1.3em;
+        width: 100%;
+
+        .horizontal {
+            display: grid;
+
+            .item-list .item {
+                > div:nth-of-type(2) {
+                    flex: 3;
+                    padding: 0 .875em;
+
+                    h5 {
+                        margin: 0;
+                    }
+
+                    .horizontal {
+                        display: flex;
+                    }
+                }
+            }
+
+            .totals {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                > div {
+                    flex: 1;
+                }
+            }
+        }
+    }
+
+    .modal {
+        width: 90%;
+
+        > div {
+            padding: .7em;
+
+            ul .item > div:nth-of-type(3) {
+                h5 {
+                    margin: 0;
+                }
+            }
+        }
+
+        footer {
+            align-self: end;
+        }
+    }
+}

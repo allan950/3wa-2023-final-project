@@ -6,17 +6,20 @@
 
 <div class="admin-page">
 
-<div>
 {{ include('back/index.html.twig') }}
-</div>
 
     <div class="content">
 
     <div>
 
-    <h1>Order</h1>
+    <header>
+    <a href="{{ path('app_admin_order_index') }}" class="back-btn">
+        <i class="fi fi-rs-arrow-left"></i> back to list
+    </a>
+        <h3>Order</h3>  
+    </header>
 
-    <table class="table">
+    <table class="table show">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -27,40 +30,42 @@
                 <td>{{ order.client.email }}</td>
             </tr>
             <tr>
-                <th>Order_date</th>
+                <th>Order date</th>
                 <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Total_price_ht</th>
+                <th>Subtotal price</th>
                 <td>{{ order.totalPriceHt|format_currency('EUR') }}</td>
             </tr>
             <tr>
-                <th>Total_price_ttc</th>
+                <th>Total price</th>
                 <td>{{ order.totalPriceTtc|format_currency('EUR') }}</td>
             </tr>
-            {# <tr>
-                <th>Items</th>
-                <td>{{ order.items ? order.items|join(', ') : '' }}</td>
-            </tr> #}
             <tr>
                 <th>Items</th>
                 {% if order.items %}
                 <td>
+                    {% set total_qty = 0 %}
                     {% for item in order.items %}
-                        Nom du produit: {{item.name}}<br>
-                        Prix (unité): {{item.price|format_currency('EUR')}}<br>
-                        Quantité: {{item.quantity}}<br>
-                        --------------------------------------------<br>
+                        Product : {{item.name}}<br>
+                        Price (unit) : {{item.price|format_currency('EUR')}}<br>
+                        Quantity : {{item.quantity}}<br>
+
+                        {% if loop.index < order.items|length %}
+                        <hr class="dotted">
+                        {% endif %}
+
+                        {% set total_qty = total_qty + item.quantity %}
                     {% endfor %}
                 </td>
                 {% endif %}
             </tr>
+            <tr>
+                <th>Total quantity</th>
+                <td>{{total_qty}}</td>
+            </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_admin_order_index') }}">back to list</a>
-
-    {# <a href="{{ path('app_admin_order_edit', {'id': order.id}) }}">edit</a> #}
 
     {{ include('back/admin_order/_delete_form.html.twig') }}
     </div>

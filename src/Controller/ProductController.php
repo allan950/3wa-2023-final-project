@@ -26,16 +26,44 @@ class ProductController extends AbstractController
     #[Route('/list/filter', name: 'app_product_list_filtered')]
     public function filterProducts(Request $req, ProductRepository $productRepo): Response 
     {
+
         $params = $req->query;
-        $products = $productRepo->filterProducts($params);
+        $filters = array();
+
+        if (!empty($params->all('anime'))) {
+            $filters["anime"] = $params->all('anime');
+        }
+
+        if (!empty($params->all('category'))) {
+            $filters["category"] = $params->all('category');
+        }
+        if (!empty($params->get('min-price'))) {
+            $filters["minPrice"] = $params->get('min-price');
+        } elseif (!empty($params->get('prev-min-price'))) { 
+            $filters['minPrice'] = $params->get('prev-min-price');
+        }
+
+        if (!empty($params->get('max-price'))) {
+            $filters["maxPrice"] = $params->get('max-price');
+        } elseif (!empty($params->get('prev-max-price'))) { $filters['maxPrice'] = $params->get('prev-max-price'); }
+
+        $params->remove("prev-min-price");
+        $params->remove("prev-max-price");
+
+        $req->overrideGlobals();
+
+        $products = $productRepo->filterProducts($filters);
 
         return $this->render('product-list/index.html.twig', [
             'products' => $products,
+            'filters' => $filters
         ]);
     }
 
     #[Route('/product/{id<[0-9]+>}', name: 'app_product')]
-    public function retrieveProduct(Product $product): Response {
+    public function retrieveProduct(ProductRepository $productRepo, $id): Response {
+
+        $product = $productRepo->getOne($id);
 
         return $this->render('product/index.html.twig', [
             "product" => $product,

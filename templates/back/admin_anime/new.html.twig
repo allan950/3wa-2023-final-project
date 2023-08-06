@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Anime{% endblock %}
+
+{% block body %}
+    <h1>Create new Anime</h1>
+
+    {{ include('back/admin_anime/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_anime_index') }}">back to list</a>
+{% endblock %}

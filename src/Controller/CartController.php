@@ -14,7 +14,7 @@ class CartController extends AbstractController
     public function index(Request $request, ManageCart $cart): Response
     {
         if ($request->getSession()->get("cart")) {
-            $count = $request->getSession()->get("cart")->getCount();
+            $count = $request->getSession()->get("cart")->getTotalCount();
             $items = $request->getSession()->get("cart")->getCart();
             $total = $request->getSession()->get("cart")->getTotal();
             $totalTTC = $request->getSession()->get("cart")->getTotalTTC();

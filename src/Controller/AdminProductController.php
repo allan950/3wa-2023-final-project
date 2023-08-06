@@ -18,7 +18,7 @@ class AdminProductController extends AbstractController
     #[Route('/', name: 'app_admin_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
-        return $this->render('back/product/index.html.twig', [
+        return $this->render('back/admin_product/index.html.twig', [
             'products' => $productRepository->getAllWithCategory(),
         ]);
     }
@@ -30,7 +30,7 @@ class AdminProductController extends AbstractController
 
         $products = $productRepo->queryFilteredList(intval($params->get('id')), $params->get('name'), floatval($params->get('price')), $params->get('category'));
 
-        return $this->render('back/product/index.html.twig', [
+        return $this->render('back/admin_product/index.html.twig', [
             'products' => $products,
         ]);
     }
@@ -48,16 +48,19 @@ class AdminProductController extends AbstractController
             return $this->redirectToRoute('app_admin_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/product/new.html.twig', [
+        return $this->renderForm('back/admin_product/new.html.twig', [
             'product' => $product,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_admin_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    public function show(ProductRepository $productRepository, $id): Response
     {
-        return $this->render('back/product/show.html.twig', [
+
+        $product = $productRepository->getOne($id);
+
+        return $this->render('back/admin_product/show.html.twig', [
             'product' => $product,
         ]);
     }
@@ -74,7 +77,7 @@ class AdminProductController extends AbstractController
             return $this->redirectToRoute('app_admin_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/product/edit.html.twig', [
+        return $this->renderForm('back/admin_product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
         ]);

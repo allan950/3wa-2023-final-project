@@ -1,5 +1,9 @@
 .product-list-page {
 
+    > h4 {
+        text-align: center;
+    }
+
     .flex {
         display: flex;
 
@@ -31,6 +35,27 @@
                             width: 6em;
                             padding: .625em 1.25em;
                             text-align: center;
+                        }
+
+                        .filtered-price-tag {
+                            margin-top: 4px;
+                            background-color: gainsboro;
+                            color: gray;
+                            display: block;
+                            width: fit-content;
+                            padding: .1em .8em;
+                            padding-right: .5em;
+                            cursor: pointer;
+
+                            span {
+                                font-size: .725em;
+                            }
+
+                            svg {
+                                height: .55em;
+                                width: .55em;
+                                vertical-align: middle;
+                            }
                         }
                     }
                 }
@@ -97,6 +122,46 @@
     .product-list-page {
         li {
             flex-basis: 50% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 790px) {
+    .product-list-page {
+        .flex {
+            aside {
+                display: none;
+            }
+
+            ul.product-list {
+                li {
+                    .structure {
+                        img {
+                            padding: 2.3em !important;
+                        }
+    
+                        .text-body {
+                            display: grid;
+                            text-align: center;
+                            grid-auto-rows: 2em;
+    
+                            > * {
+                                align-self: center;
+                            }
+                            
+                            p {
+                                transform: initial;
+                                max-width: 100%;
+                                order: 2;
+                            }
+    
+                            h6 {
+                                transform: initial;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

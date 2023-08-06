@@ -1,19 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}erreur 404{% endblock %}
+{% block title %}Error 404
+{% endblock %}
 {% block body %}
 
-<main style="height: 100vh;">
+	<main class="error-page">
 
-<div style="text-align: center">
-    <h2>Erreur</h2>
-    <h1><span>4</span><span>0</span><span>4</span></h1>
-    <div>
-    La page que cherchez n'a pas été trouvé!<br />
-    Retour à l'accueil <a href="{{path('home')}}">ici</a>
-    </div>
-</div>
+		<div class="middle-container">
+			<div>
+				<div class="left-col">
+					<h2>Error</h2>
+					<h1>
+						<span>4</span>
+						<span>0</span>
+						<span>4</span>
+					</h1>
+				</div>
+				<div class="right-col">
+					<p>
+						The page you looking for has not been found!<br>
+						Click on the button below to get back on the right track
+					</p>
+				</div>
+			</div>
 
-</main>
+			<br>
+			<br>
+
+			<div class="btn-container">
+				<a href="{{path('home')}}" class="large-btn">Go back home</a>
+			</div>
+		</div>
+
+
+	</main>
 
 {% endblock %}

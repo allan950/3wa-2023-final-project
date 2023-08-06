@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product list
+{% endblock %}
+
+{% block body %}
+
+	<div class="admin-page">
+
+			{{ include('back/index.html.twig') }}
+
+		<div class="content">
+
+			<div class="full-width">
+
+				<section class="metrics">
+					<div class="count">
+						<div class="label">
+							<b>Number of products</b>
+						</div>
+						<div class="output">
+							<span>{{products | length}}</span>
+						</div>
+					</div>
+				</section>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Anime</th>
+							<th>Category</th>
+							<th></th>
+						</tr>
+						<tr class="filters">
+							<form action="{{ path('app_admin_product_list_search') }}">
+								<th></th>
+								<th>
+									<input type="text" name="id" placeholder="">
+								</th>
+								<th>
+									<input type="text" name="name" placeholder="">
+								</th>
+								<th>
+									<input type="text" name="price" placeholder="">
+								</th>
+								<th>
+									<select name="anime" id="">
+										<option value="All">All</option>
+										<option value="one-piece">One piece</option>
+										<option value="attack-on-titan">Attack on Titan</option>
+										<option value="death-note">Death Note</option>
+										<option value="naruto">Naruto</option>
+										<option value="bleach">Bleach</option>
+									</select>
+								</th>
+								<th>
+									<select name="category" id="">
+										<option value="all">All</option>
+										<option value="t-shirt">T-shirt</option>
+										<option value="sweatshirt">Sweatshirt</option>
+										<option value="socks">Socks</option>
+										<option value="hat">Hat</option>
+									</select>
+								</th>
+								<th>
+									<button type="submit" style="width: initial;">
+										<i class="fi fi-rs-search"></i>
+									</button>
+								</th>
+							</form>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+							<tr>
+								<td><img src="{{product.urlimg}}" height="55" alt=""></td>
+								<td>{{ product.id }}</td>
+								<td>{{ product.name }}</td>
+								<td>{{ product.price|format_currency('EUR') }}</td>
+								<td>{{ product.anime }}</td>
+								<td>{{ product.category }}</td>
+								<td class="actions">
+									<a href="{{ path('app_admin_product_show', {'id': product.id}) }}" title="Show details">
+										<i class="fi fi-rs-eye"></i>
+									</a>
+									<a href="{{ path('app_admin_product_edit', {'id': product.id}) }}" title="Edit">
+										<i class="fi fi-rs-pencil"></i>
+									</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="6">no products found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				<a href="{{ path('app_admin_product_new') }}" class="large-btn add-new">Add new product</a>
+
+				<div class="spacer"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

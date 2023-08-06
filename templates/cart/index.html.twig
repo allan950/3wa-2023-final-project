@@ -1,84 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Cart
+{% endblock %}
 
 {% block body %}
-    {% include('widgets/navbar/index.html.twig') %} 
+	{% include('widgets/navbar/index.html.twig') with {'count': 'cart_count'} %}
 
-<main class="cart-page">
-  <h2>Votre Panier</h2>
+	<main class="cart-page">
+		<h2>Your Cart</h2>
 
 
-{% if cart_products %}
+		{% if cart_products %}
 
-<div class="container">
+			<div class="container">
 
-  <div class="col-10">
+				<div class="col-10">
 
-  {% for item in cart_products %}
+					{% for item in cart_products %}
 
-  <div class="card mb-3">
-    <div class="card-img">
-      <img src="{{item.image}}" alt="{{item.name}}">
-    </div>
-    <div class="card-body col">
-    <div class="card-name-and-price">
-      <h5 class="card-title">{{item.name}}</h5>
-      <p class="card-text">{{item.price|format_currency('EUR')}}</p>
-    </div>
-      <div class="card-quantity">
-        <p class="card-text">Quantité : {{item.quantity}}</p>
-      </div>
-    
-    
-    </div>
-    <div style="display: inherit;justify-content: center;align-items: center;">
-      <a href="{{path('app_cart_remove_item', {"id": item.id})}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-  </svg></a>
-    </div>
-  </div>
+						<div class="card mb-3">
+							<div class="card-img">
+								<img src="{{item.image}}" alt="{{item.name}}">
+							</div>
+							<div class="card-body col">
+								<div class="card-name-and-price">
+									<h5 class="card-title">{{item.name}}</h5>
+									<p class="card-text">{{item.price|format_currency('EUR')}}</p>
+								</div>
+								<div class="card-quantity">
+									<p class="card-text">Quantity :
+										{{item.quantity}}</p>
+								</div>
+							</div>
+							<div class="remove-from-cart">
+								<a href="{{path('app_cart_remove_item', {"id": item.id})}}">
+									<i class="fi fi-rs-trash"></i>
+								</a>
+							</div>
+						</div>
 
-  {% endfor %}
-  </div>
+					{% endfor %}
+				</div>
 
-  <div class="col-2">
+				<div class="col-2">
 
-    <div>
+					<div>
 
-        <div style="margin-left: 24px;">
-            <div>
-                <p>Nombre d'articles : {{cart_count}}</p>
-            </div>
-            <div>
-                <p>Sous-total : {{cart_total|format_currency('EUR')}}</p>
-            </div>
-            <div>
-                <p>Total TTC : {{(cart_total_ttc)|format_currency('EUR')}}</p>
-            </div>
-        </div>
+						<div class="cart-info">
+							<div>
+								<p>Number of products</p>
+								<p>{{cart_count}}</p>
+							</div>
+							<div>
+								<p>Subtotal</p>
+								<p>{{cart_total|format_currency('EUR')}}</p>
+							</div>
+							<div>
+								<p>Total</p>
+								<p>{{(cart_total_ttc)|format_currency('EUR')}}</p>
+							</div>
+						</div>
 
-        <a href="{{path('app_checkout')}}" class="checkout-btn">Checkout</a>
-    </div>
-  </div>
-</div>
+						<a href="{{path('app_checkout')}}" class="checkout-btn">Checkout</a>
+					</div>
+				</div>
+			</div>
 
-{% else %}
+		{% else %}
 
-<div style="
-    text-align: center;
-    margin-top: 150px;
-">
-  <div style="
-    margin-bottom: 20px;
-">
-    <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="#90c390" class="bi bi-basket-fill" viewBox="0 0 16 16">
-  <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
-</svg>
-  </div>
-  <h3 style="color: #90c390; font-weight: 700;">Le panier est vide!</h3>
-</div>
-</main>
+			<div class="empty-cart">
+				<h6>Le panier est vide!</h6>
+			</div>
+		</main>
 
-{% endif %}
+	{% endif %}
 {% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Anime list
+{% endblock %}
+
+{% block body %}
+
+	<div class="admin-page">
+
+			{{ include('back/index.html.twig') }}
+		
+
+		<div class="content">
+
+			<div class="full-width">
+
+				<section class="metrics">
+					<div class="count">
+						<div class="label">
+							<b>Number of animes</b>
+						</div>
+						<div class="output">
+							<span>{{animes | length}}</span>
+						</div>
+					</div>
+				</section>
+
+				<table class="table">
+					<thead>
+						<tr class="left">
+							<th>Id</th>
+							<th>Label</th>
+							<th>actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for anime in animes %}
+							<tr>
+								<td>{{ anime.id }}</td>
+								<td>{{ anime.label }}</td>
+								<td class="actions">
+									<a href="{{ path('app_admin_anime_show', {'id': anime.id}) }}" title="Show details">
+										<i class="fi fi-rs-eye"></i>
+									</a>
+									<a href="{{ path('app_admin_anime_edit', {'id': anime.id}) }}" title="Edit">
+										<i class="fi fi-rs-pencil"></i>
+									</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="3">no animes found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				<a href="{{ path('app_admin_anime_new') }}" class="large-btn add-new">Add new anime</a>
+
+				<div class="spacer"></div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

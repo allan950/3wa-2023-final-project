@@ -9,7 +9,6 @@
 
         .box {
             height: 16em;
-            border: 1px solid #000;
         }
 
         .box-100 {
@@ -18,6 +17,16 @@
 
         .box-33 {
             width: calc(100% / 3);
+            display: inherit;
+            align-items: center;    
+
+            a {
+                padding: 0.875em;
+
+                img {
+                    max-width: 100%;
+                }
+            }
         }
     }
 
@@ -28,14 +37,22 @@
             li {
                 flex: 1;
 
-                img {
-                    max-height: 240px;
+                a {
+                    width: 100%;
+                    display: block;
+
+                    img {
+                        max-height: 240px;
+                    }
                 }
             }
 
             li:hover {
                 background-color: #000;
-                color: #fff;
+
+                a {
+                    color: #fff;
+                }
             }
         }
     }
@@ -97,6 +114,36 @@ position: absolute;
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .home-page {
+    
+        .top-boxes {
+
+            .box {
+                flex: 1 0 100%;
+            }
+
+            .box:not(:last-of-type) {
+                border-bottom: 1px solid #000;
+            }
+        }
+
+        .categories {
+            ul {
+                flex-wrap: wrap;
+
+                li {
+                    flex: 1 0 50%;
+                }
+            }           
+        }
+
+        .recommendations {
+            display: none;
         }
     }
 }

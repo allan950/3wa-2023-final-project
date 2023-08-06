@@ -9,6 +9,7 @@
 @import 'cart.scss';
 @import 'dashboard.scss';
 @import 'orders.scss';
+@import 'errors.scss';
 
 
 /****************************
@@ -60,7 +61,19 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, label, a, strong, b, input[type=submit] {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+a,
+strong,
+b,
+input[type=submit] {
     font-family: 'Univers', Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -78,10 +91,10 @@ h2 {
     color: transparent;
     text-transform: uppercase;
     text-align: center;
--webkit-text-stroke-color: #000;
--webkit-text-stroke-width: 1px;
-font-size: 2.3em;
-letter-spacing: .085em;
+    -webkit-text-stroke-color: #000;
+    -webkit-text-stroke-width: 1px;
+    font-size: 2.3em;
+    letter-spacing: .085em;
 }
 
 h3 {
@@ -105,13 +118,44 @@ a {
     text-decoration: none;
 }
 
-ul, li {
+i {
+    vertical-align: middle;
+}
+
+ul,
+li {
     list-style: none;
     padding: 0;
 }
 
-input[type=checkbox] {
 
+input[type=checkbox] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: black;
+    width: 1.05em;
+    height: 1.05em;
+    border: 1px solid black;
+    border-radius: 0;
+    transform: translateY(-0.075em);
+    display: inline-grid;
+    place-content: center;
+}
+
+input[type=checkbox]::before {
+    content: "";
+    width: .6em;
+    height: .6em;
+    transform: scale(0);
+    transition: .3s transform ease-in-out;
+    box-shadow: inset 1em 1em #000;
+}
+
+input[type=checkbox]:checked:before {
+    transform: scale(1);
 }
 
 input::-webkit-inner-spin-button,
@@ -122,6 +166,10 @@ input::-webkit-outer-spin-button {
 
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+textarea {
+    resize: none;
 }
 
 button {
@@ -161,26 +209,26 @@ nav {
         ul {
             display: inline-flex;
 
-        li {
-            display: inline;
-            list-style: none;
-            margin: 6px 8px;
-            font-weight: 600;
-            text-transform: uppercase;
+            li {
+                display: inline;
+                list-style: none;
+                margin: 6px 8px;
+                font-weight: 600;
+                text-transform: uppercase;
 
-        .lien {
-            text-decoration: none;
-            color: #6B9080;
-        }
+                .lien {
+                    text-decoration: none;
+                    color: #6B9080;
+                }
 
-        .lien:hover {
-            color: cadetblue;
-            text-decoration: underline;
-            font-size: large;
-        }
+                .lien:hover {
+                    color: cadetblue;
+                    text-decoration: underline;
+                    font-size: large;
+                }
 
+            }
         }
-    }
     }
 }
 
@@ -206,9 +254,7 @@ nav {
         }
     }
 
-    .card {
-
-    }
+    .card {}
 }
 
 //Page catalogue
@@ -217,8 +263,8 @@ nav {
     display: flex;
     justify-content: center;
 }
-    
-    /*.card {
+
+/*.card {
         display: inline-grid;
         grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
         padding: 20px;
@@ -249,96 +295,21 @@ nav {
             }
           }*/
 
-        .structure {
-            position: relative;
+.structure {
+    position: relative;
 
-            .body {
-                position: absolute;
-                bottom: 0;
+    .body {
+        position: absolute;
+        bottom: 0;
 
-                .price {
-                    padding: 10px;
-                    text-align: center;
-                }
-            }
-        }
-    
- 
-    .container {
-        display: flex;
-       
- }
- 
-
- .image-container {
-    height: 300px;
-  }
-
-//Produits
-
-.produit-container {
-    padding-left: 100px;
-}
- 
-  .qty-container {
-        display: flex;
-            #quantity {
-                border: 1px solid black;
-                background-color: white;
-                margin: 1px;
-                padding: 1px;
-            }
-  }
-
-
-.admin-page {
-    display: flex;
-
-
-    .sidebar {
-
-        nav {
-            background-color: black;
-            height: 100%;
-            padding: 16px 6px;
-            box-sizing: border-box;
-
-            ul {
-                list-style: none;
-                margin: 0;
-
-                li {
-                    font-family: Verdana, Geneva, Tahoma, sans-serif;
-                    margin: 10px 6px;
-
-                    a {
-                        color: white;
-                        text-decoration: none;
-                        font-size: .85em;
-                    }
-                }
-            }
-        }
-    }
-
-    .content {
-        padding: 24px 10px;
-        /* width: 100%; */
-        display: flex;
-        justify-content: center;
-
-        form {
-
-            input,
-            select {
-                width: 100%;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-                padding: 8px 18px;
-            }
+        .price {
+            padding: 10px;
+            text-align: center;
         }
     }
 }
+
+
 
 .dashboard-home {
 

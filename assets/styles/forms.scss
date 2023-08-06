@@ -2,7 +2,7 @@ $inputSize: 355px;
 
 
 
-input[type=text], input[type=email], input[type=password], input[type=number], select {
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea {
     border: 1px solid #000;
     border-radius: 0;
     background-color: white;
@@ -103,4 +103,28 @@ height: 100vh;
     input {
         width: 490px;
     }
+}
+
+@media only screen and (max-width: 768px) {
+    .login-page {
+        .container {
+            .visual-design {
+                position: fixed;
+                width: 100%;
+                z-index: 1;
+            }
+
+            .spaced-out {
+                z-index: 2;
+                background-color: white;
+                margin: auto 0.425em;
+                box-shadow: rgba(128, 128, 128, 0.5) 0 0 8px 1px;
+            }
+        }
+    }
+
+        section.container {
+            width: 100%;
+            padding: 0 1.3em;
+        }
 }

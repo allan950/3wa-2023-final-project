@@ -1,5 +1,15 @@
 .product-details-page {
+
+    .back-btn {
+        button {
+            background-color: transparent;
+            border: none;
+        }
+    }
+
     .container {
+        display: flex;
+
         .image-container {
             height: calc(100vh - 5em);
             padding-right: 2.3em;
@@ -12,7 +22,7 @@
         .details {
             border-left: $seperation;
 
-            > div {
+            >div {
                 height: 100%;
 
                 form {
@@ -21,13 +31,6 @@
 
                     .produit-container {
                         padding: 1em 4em;
-
-                        #nom-prd {
-                            text-align: left;
-                            color: #081C15;
-    display: flex;
-    justify-content: center;
-                        }
 
                         .badge {
                             padding: .6em 1.3em;
@@ -41,6 +44,7 @@
                         }
 
                         .qty-container {
+                            display: flex;
 
                             input,
                             button {
@@ -49,7 +53,7 @@
                             }
 
                             button {
-                                font-size: 1.6em;
+                                font-size: 1.2em;
                             }
 
                             input {
@@ -69,10 +73,11 @@
                             }
                         }
 
-                        .prix-prd {
-                            font-weight: 200;
+                        .product-name {
                             font-size: 2.5em;
                             margin-top: 0.5em;
+                            text-align: left;
+                            color: #081C15;
                         }
                     }
 
@@ -83,9 +88,70 @@
                         border: none;
                         border-radius: 0;
                         padding: 1.05em 1.6em;
+
+                        i {
+                            margin-right: .225em;
+                        }
                     }
                 }
             }
+        }
+    }
+
+    .mobile-view {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 786px) {
+    .product-details-page {
+        .container {
+            flex-wrap: wrap;
+
+            .image-container {
+                height: auto;
+                padding-right: 0;
+
+                img {
+                    width: 100%;
+    max-width: 420px;
+    padding: 0.825em;
+                }
+            }
+
+            .details {
+                text-align: center;
+                border-left: 0;
+
+                > div {
+                    form {
+                        .produit-container {
+                            .back-btn {
+                                display: none;
+                            }
+
+                            .product-name {
+                                font-size: 1.5em;
+                                text-align: center;
+                            }
+            
+                            .qty-container {
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .mobile-view {
+            display: block;
+        }
+
+        .back-btn.mobile-view {
+            margin-top: 1.25em;
+            margin-left: .725em;
+            margin-right: .725em;
         }
     }
 }

@@ -1,104 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}User list
+{% endblock %}
 
 {% block body %}
 
 
+	<div class="admin-page">
 
-<div class="admin-page">
+			{{ include('back/index.html.twig') }}
 
-<div>
-{{ include('back/index.html.twig') }}
-</div>
+		<div class="content">
 
-    <div class="content">
+			<div class="full-width">
 
-    <div>
+				<section class="metrics">
+					<div class="count">
+						<div class="label">
+							<b>Number of users</b>
+						</div>
+						<div class="output">
+							<span>{{users | length}}</span>
+						</div>
+					</div>
+				</section>
 
-    <section class="metrics">
-        <div class="count">
-            <div class="label"><b>Number of users</b></div>
-            <div class="output"><span>{{users | length}}</span></div>
-        </div>
-    </section>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Email</th>
+							<th>Roles</th>
+							<th>Last Name</th>
+							<th>First Name</th>
+							<th></th>
+						</tr>
+						<tr class="filters">
+							<form {# action="{{ path('') }}" #}>
+								<th>
+									<input type="text" name="id" placeholder="">
+								</th>
+								<th>
+									<input type="text" name="email" placeholder="">
+								</th>
+								<th>
+									<select name="roles">
+										<option value="">User</option>
+										<option value="">Admin</option>
+									</select>
+								</th>
+								<th>
+									<input type="text" name="lname" placeholder="">
+								</th>
+								<th>
+									<input type="text" name="fname" placeholder="">
+								</th>
+								<th>
+									<button type="submit" style="width: initial;">
+										<i class="fi fi-rs-search"></i>
+									</button>
+								</th>
+							</form>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+							<tr>
+								<td>{{ user.id }}</td>
+								<td>{{ user.email }}</td>
+								<td>
+									{% if user.roles %}
+										{% for role in user.roles %}
+											<div class="badge">
+												{% if role == "ROLE_ADMIN" %}
+													<span class="black">admin</span>
+												{% elseif role == "ROLE_USER" %}
+													<span class="green">user</span>
+												{% else %}
+													<span class="green">{{role}}</span>
+												{% endif %}
+											</div>
+										{% endfor %}
+									{% endif %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th></th>
-            </tr>
-            <tr class="filters">
-                <form {# action="{{ path('') }}" #}>
-                    <th>
-                        <input type="text" name="id" placeholder="">
-                    </th>
-                    <th>
-                        <input type="text" name="email" placeholder="">
-                    </th>
-                    <th>
-                        <select name="roles">
-                            <option value="">User</option>
-                            <option value="">Admin</option>
-                        </select>
-                    </th>
-                    <th>
-                        <input type="text" name="lname" placeholder="">
-                    </th>
-                    <th>
-                        <input type="text" name="fname" placeholder="">
-                    </th>
-                    <th>
-                        <button type="submit" style="width: initial;">search</button>
-                    </th>
-                </form>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>
-                    {% if user.roles %}
-                        {% for role in user.roles %}
-                        <div class="badge">
-                            {% if role == "ROLE_ADMIN" %}
-                            <span class="black">admin</span>
-                            {% elseif role == "ROLE_USER" %}
-                            <span class="green">user</span>
-                            {% else %}
-                            <span class="green">{{role}}</span>
-                            {% endif %}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                
-                </td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.firstName }}</td>
-                <td>
-                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+								</td>
+								<td>{{ user.lastName }}</td>
+								<td>{{ user.firstName }}</td>
+								<td class="actions">
+									<a href="{{ path('app_admin_user_show', {'id': user.id}) }}" title="Show details">
+                                    <i class="fi fi-rs-eye"></i>
+                                    </a>
+									<a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" title="Edit">
+                                    <i class="fi fi-rs-pencil"></i>
+                                    </a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="9">no users found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 
-    <a href="{{ path('app_admin_user_new') }}">Create new</a>
+				<a href="{{ path('app_admin_user_new') }}" class="large-btn add-new">Add new user</a>
 
-
-    </div>
-    </div>
-    </div>
+                <div class="spacer"></div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

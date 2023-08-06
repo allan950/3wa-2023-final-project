@@ -32,6 +32,18 @@ class ManageCart
         $this->cart["count"] = count($this->cart["items"]);
     }
 
+    public function getTotalCount(): int {
+        $count = 0;
+
+        foreach($this->cart["items"] as $item) {
+            $count = $count + $item["quantity"];
+        }
+
+
+
+        return $count;
+    }
+
     private function calculateTotal() {
         $items = $this->cart["items"];
 

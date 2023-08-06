@@ -14,7 +14,7 @@
                 .card-img {
                     height: 9em;
                     padding: .125em 1.35em;
-    
+
                     img {
                         height: 100%;
                     }
@@ -29,8 +29,8 @@
 
                         h5 {
                             font-family: 'Univers', Verdana, Geneva, Tahoma, sans-serif;
-font-weight: 800;
-font-size: 1.1em;
+                            font-weight: 800;
+                            font-size: 1.1em;
                         }
                     }
 
@@ -39,15 +39,49 @@ font-size: 1.1em;
                         align-self: center;
                     }
                 }
+
+                .remove-from-cart {
+                    display: inherit;
+                    justify-content: center;
+                    align-items: center;
+
+                    i {
+                        font-size: 1.525em;
+                    }
+                }
             }
         }
 
         .col-2 {
             flex: 1;
 
-            > div:first-of-type {
+            >div:first-of-type {
                 height: 100%;
                 display: grid;
+
+                .cart-info {
+                    margin-left: 24px;
+                    margin-right: 24px;
+
+                    > div {
+                        display: flex;
+
+                        > * {
+                            margin: 0;
+margin-bottom: .6em;
+                        }
+
+                        p:nth-of-type(1) {
+                            text-align: left;
+                            flex: 2;
+                        }
+
+                        p:nth-of-type(2) {
+                            text-align: right;
+                            flex: 1;
+                        }
+                    }
+                }
 
                 .checkout-btn {
                     width: 100%;
@@ -58,6 +92,65 @@ font-size: 1.1em;
                     padding: 1.2em;
                     height: 3.5em;
                     align-self: end;
+                }
+            }
+        }
+    }
+
+    .empty-cart {
+        text-align: center;
+        height: 50vh;
+
+        h6 {
+            font-weight: 300;
+            font-size: 1em;
+            transform: translateY(-50%);
+            top: 50%;
+            position: relative;
+        }
+    }
+}
+
+@media only screen and (max-width: 786px) {
+    .cart-page {
+        .container {
+            display: grid;
+            align-content: space-between;
+
+            .col-10 {
+                border-right: 0;
+                max-height: calc(100vh - 22em);
+overflow: auto;
+
+                .card {
+                    align-items: center;
+
+                    .card-img {
+                        flex: 1;
+                        height: 6em;
+                        padding: 0;
+                    }
+                }
+            }
+
+            .col-2 {
+                position: fixed;
+bottom: 0;
+width: 100%;
+background-color: #fff;
+
+                >div:first-of-type {
+
+                    .cart-info {
+                        margin: .675em 2.3em;
+
+                        > div {
+    
+                            > * {
+                                flex: 1;
+                            }
+                        }
+                    }
                 }
             }
         }

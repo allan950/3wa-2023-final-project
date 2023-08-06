@@ -1,104 +1,112 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Acceuil
+	Home
 {% endblock %}
 
 {% block body %}
 
-{% include('widgets/navbar/index.html.twig') %}
+	{% include('widgets/navbar/index.html.twig') %}
 
-<main class="home-page">
+	<main class="home-page">
 
-<h2>Bienvenue chez MMA store<h2>
-<h4>Retrouvez du merch à l'effigie de vos personnages d'animés préféré<h4>
+						<section class="top-boxes">
+							<div class="box box-33">
+								<a href="{{path('app_product_list_filtered', {'anime': ['one-piece']})}}">
+									<img src="https://1000logos.net/wp-content/uploads/2022/08/One-Piece-Logo.png" alt="One Piece">
+								</a>
+							</div>
+							<div class="box box-33">
+								<a href="{{path('app_product_list_filtered', {'anime': ['naruto']})}}">
+									<img src="https://www.freepnglogos.com/uploads/naruto/naruto-meu-photoscape-aviso-rapidinho-png-anime-tutorial-5.png" alt="Naruto">
+								</a>
+							</div>
+							<div class="box box-33">
+								<a href="{{path('app_product_list_filtered', {'anime': ['bleach']})}}">
+									<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Bleach_%28manga%29_Logo.svg/2560px-Bleach_%28manga%29_Logo.svg.png" alt="Bleach">
+								</a>
+							</div>
+						</section>
 
-<section class="top-boxes">
-    <div class="box box-100">
+						<section class="categories">
+							<ul>
+								<li>
+									<a href="{{path('app_product_list_filtered', {'category': ['t-shirt']})}}">
+										<img src="https://www.ripplejunction.com/media/catalog/product/Preview/TA/TAAS2137_NAVY_HEATHER.jpg?store=default&image-type=image" alt="T-Shirt Category">
+										<div class="description">
+											<p>T-Shirts</p>
+										</div>
+									</a>
+								</li>
+								<li>
+                                    <a href="{{path('app_product_list_filtered', {'category': ['sweatshirt']})}}">
+                                        <img src="https://www.ripplejunction.com/media/catalog/product//Preview/BH/BHBW2245_BLACK.jpg?store=default&image-type=image" alt="Sweatshirt Category">
+									<div class="description">
+										<p>Sweatshirts</p>
+									</div>
+                                    </a>
+								</li>
+								<li>
+                                    <a href="{{path('app_product_list_filtered', {'category': ['socks']})}}">
+                                        <img src="https://www.ripplejunction.com/media/catalog/product/Preview/OP/OPSY2599_FORM.jpg?store=default&image-type=image" alt="Socks Category">
+									<div class="description">
+										<p>Socks</p>
+									</div>
+                                    </a>
+								</li>
+								<li>
+                                <a href="{{path('app_product_list_filtered', {'category': ['hat']})}}">
+                                <img src="https://www.ripplejunction.com/media/catalog/product/Preview/8T/8TBN2142_FRONT.jpg?store=default&image-type=image" alt="Hat Category">
+                                        <div class="description">
+										<p>Hats</p>
+									</div>
+                                    </a>
+								</li>
+							</ul>
+						</section>
 
-    </div>
-    <div class="box box-33">
+						{# <div class="paragraphs">
+						
+						<p>Aniki est une marque de vêtements haut de gamme qui s’inspire des mangas et animés du moment pour créer ses collections de vêtements manga. L’ensemble des produits Aniki ont été fait avec la ferme conviction que les fans de mangas méritent des habits à la hauteur de leur passion. <br>
+						Les otakus ne sont pas à prendre à la légère, et c’est en créant une marque de vêtements haut de gamme que nous exprimons ce souhait d’être pris en considération par le reste du monde. Solidaires et soudés, les lecteurs de mangas, mais aussi les anime only, trouveront sur aniki-shop.com des vêtements manga d’une qualité sans égal. </p>
+						<p>Des t-shirts mangas, des casquettes ou même des sacoches inspirées des animés les plus tendances du moment, voici ce que propose Aniki. En tant que marque Française, nous nous devons de mettre en avant notre expertise. C’est pourquoi, une grande partie de nos habits et accessoires mangas sont fabriqués dans un atelier Français.<br>
+						Le but est de proposer des vêtements mangas d’une qualité supérieure tout en étant abordable et pas chère. Notre marque de vêtements manga est certainement la première à faire participer ses fans à la création des produits, que ce soit via des lives ou via différents sondages sur nos réseaux sociaux. Tu l’as compris, Aniki est en quelque sorte un équipage de fan de manga et de passionné de mode !</p>
+						</div> #}
 
-    </div>
-    <div class="box box-33">
-        
-    </div>
-    <div class="box box-33">
-        
-    </div>
-</section>
-
-<section class="categories">
-    <ul>
-        <li>
-            <img src="https://www.ripplejunction.com/media/catalog/product/Preview/TA/TAAS2137_NAVY_HEATHER.jpg?store=default&image-type=image" alt="T-Shirt Category">
-            <div class="description">
-                <p>T-Shirts</p>
-            </div>
-        </li>
-        <li>
-            <img src="https://www.ripplejunction.com/media/catalog/product//Preview/BH/BHBW2245_BLACK.jpg?store=default&image-type=image" alt="Sweatshirt Category">
-            <div class="description">
-                <p>Sweatshirts</p>
-            </div>
-        </li>
-        <li>
-            <img src="https://www.ripplejunction.com/media/catalog/product/Preview/OP/OPSY2599_FORM.jpg?store=default&image-type=image" alt="Socks Category">
-            <div class="description">
-                <p>Socks</p>
-            </div>
-        </li>
-        <li>
-            <img src="https://www.ripplejunction.com/media/catalog/product/Preview/8T/8TBN2142_FRONT.jpg?store=default&image-type=image" alt="Hat Category">
-            <div class="description">
-                <p>Hats</p>
-            </div>
-        </li>
-    </ul>
-</section>
-
-{# <div class="paragraphs">
-
-<p>Aniki est une marque de vêtements haut de gamme qui s’inspire des mangas et animés du moment pour créer ses collections de vêtements manga. L’ensemble des produits Aniki ont été fait avec la ferme conviction que les fans de mangas méritent des habits à la hauteur de leur passion. <br>
-Les otakus ne sont pas à prendre à la légère, et c’est en créant une marque de vêtements haut de gamme que nous exprimons ce souhait d’être pris en considération par le reste du monde. Solidaires et soudés, les lecteurs de mangas, mais aussi les anime only, trouveront sur aniki-shop.com des vêtements manga d’une qualité sans égal. </p>
-<p>Des t-shirts mangas, des casquettes ou même des sacoches inspirées des animés les plus tendances du moment, voici ce que propose Aniki. En tant que marque Française, nous nous devons de mettre en avant notre expertise. C’est pourquoi, une grande partie de nos habits et accessoires mangas sont fabriqués dans un atelier Français.<br>
-Le but est de proposer des vêtements mangas d’une qualité supérieure tout en étant abordable et pas chère. Notre marque de vêtements manga est certainement la première à faire participer ses fans à la création des produits, que ce soit via des lives ou via différents sondages sur nos réseaux sociaux. Tu l’as compris, Aniki est en quelque sorte un équipage de fan de manga et de passionné de mode !</p>
-</div> #}
-
-<section class="recommendations">
-    <h2 class="bordered">Recommendations</h2>
-    <div class="slidershow">
-        <nav>
-            <div class="nav-btn left">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-    </svg>
-            </div>
-            <div class="nav-btn right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-    </svg>
-            </div>
-        </nav>
-        <ul>
-            {% for item in 0..5 %}
-            <li>
-                <div class="product-card">
-                    <div class="image">
-                        <img src="https://www.ripplejunction.com/media/catalog/product/Preview/8T/8TAS2455_BLACK.jpg?width=700&height=700&store=default&image-type=image" alt="">
-                    </div>
-                    <div class="text-body">
-                        <p>$35.00</p>
-                        <h6>Attack on Titan Colossal Titan Screenshots T-Shirt</h6>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
+						<section class="recommendations">
+							<h2 class="bordered">Recommendations</h2>
+							<div class="slidershow">
+								<nav>
+									<div class="nav-btn left">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewbox="0 0 16 16">
+											<path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+										</svg>
+									</div>
+									<div class="nav-btn right">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewbox="0 0 16 16">
+											<path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+										</svg>
+									</div>
+								</nav>
+								<ul>
+									{% for item in 0..5 %}
+										<li>
+											<div class="product-card">
+												<div class="image">
+													<img src="https://www.ripplejunction.com/media/catalog/product/Preview/8T/8TAS2455_BLACK.jpg?width=700&height=700&store=default&image-type=image" alt="">
+												</div>
+												<div class="text-body">
+													<p>$35.00</p>
+													<h6>Attack on Titan Colossal Titan Screenshots T-Shirt</h6>
+												</div>
+											</div>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</section>
 
 
-</main>
-    
-{% endblock %}
+					</main>
+
+				{% endblock %}

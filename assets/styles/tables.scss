@@ -1,10 +1,38 @@
 .admin-page {
+    display: flex;
 
-    .sidebar {
-        position: relative;
-min-height: 100%;
-width: 172px;
-background-color: black;
+    aside {
+        min-height: 100vh;
+
+        .sidebar {
+            position: relative;
+            min-height: 100%;
+            width: 172px;
+            background-color: black;
+
+            nav {
+                background-color: black;
+                height: 100%;
+                padding: 16px 6px;
+                box-sizing: border-box;
+
+                ul {
+                    list-style: none;
+                    margin: 0;
+
+                    li {
+                        font-family: Verdana, Geneva, Tahoma, sans-serif;
+                        margin: 10px 6px;
+
+                        a {
+                            color: white;
+                            text-decoration: none;
+                            font-size: .85em;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     button {
@@ -15,61 +43,156 @@ background-color: black;
         color: #fff;
     }
 
-    table {
-        border-spacing: 0;
-        font-family: 'Univers';
+    .content {
+        width: 100%;
+        padding: .95em 1.4em;
+        display: grid;
 
-        .filters {
-            background-color: #000000;
+        .full-width {
+            width: 100%;
+
+            table {
+                border-spacing: 0;
+                font-family: 'Univers';
+                min-width: 100%;
+
+                thead {
+
+                    tr:first-of-type {
+                        text-transform: uppercase;
+                        letter-spacing: .05em;
+                        font-size: .9em;
+                    }
+
+                    tr:first-of-type.left {
+                        text-align: left;
+                    }
+
+                    .filters {
+                        background-color: #000000;
+
+                        th {
+                            padding: 0.4em;
+                        }
+                    }
+                }
+
+                td {
+                    padding: 0.7em .35em;
+                }
+
+                .actions {
+                    >*:not(:last-of-type) {
+                        margin-right: .6em;
+                    }
+                }
+
+                .badge {
+                    margin-bottom: 0.4em;
+                    display: inline;
+
+                    span {
+                        color: white;
+                        padding: 0.165em 0.8em;
+                        font-size: .85em;
+                        font-weight: 600;
+                    }
+
+                    .green {
+                        background-color: #1ed11e;
+                        box-shadow: rgb(0, 255, 0) 0 2px;
+                    }
+
+                    .black {
+                        background-color: black;
+                        box-shadow: gray 0 2px;
+                    }
+                }
+            }
+
+            .metrics {
+                margin-bottom: 1.95em;
+
+                .count {
+                    display: flex;
+                    border: 1px black solid;
+                    max-width: 14em;
+                    padding: 0.7em;
+                    align-items: center;
+
+                    .output {
+                        text-align: right;
+                        font-size: 2.3em;
+                        font-weight: 200;
+                    }
+
+                    .label,
+                    .output {
+                        flex: 1;
+                    }
+                }
+            }
+
+            .add-new {
+                position: fixed;
+                bottom: .9em;
+                right: .9em;
+            }
+
+            .spacer {
+                height: 4em;
+            }
+        }
+
+        header {
+            display: flex;
+align-items: center;
+
+            h3 {
+                flex: 1;
+margin: 0;
+margin-left: 3em;
+            }
+        }
+
+        table.show {
+            text-align: left;
+            font-family: 'Univers', Verdana, Geneva, Tahoma, sans-serif;
+            border-spacing: .7em 1.1em;
 
             th {
-                padding: 0.4em;
+                vertical-align: top;
+            }
+
+            td {
+                hr.dotted {
+                    background-color: none;
+                    border-style: dashed;
+                    border-width: 1px;
+                    border-color: #000;
+                }
             }
         }
 
-        td {
-            padding: 0.7em .35em;
-        }
+        form {
 
-        .badge {
-            margin-bottom: 0.4em;
-            display: inline;
-
-            span {
-                color: white;
-                padding: 0.165em 0.8em;
-                font-size: .85em;
-                font-weight: 600;
+            input,
+            select,
+            textarea {
+                width: 100%;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                padding: 8px 18px;
             }
 
-            .green {
-                background-color: #1ed11e;
-                box-shadow: rgb(0, 255, 0) 0 2px;
-            }
-
-            .black {
-                background-color: black;
-                box-shadow: gray 0 2px;
+            .btn.w100 {
+                width: 100%;
             }
         }
-    }
 
-    .metrics {
-        .count {
-            display: flex;
-    border: 1px black solid;
-    max-width: 14em;
-    padding: 0.7em;
-    align-items: center;
-
-    .output {
-        text-align: right;
-        font-size: 2.3em;
-        font-weight: 200;
-    }
-
-            .label, .output {
-                flex: 1;
+        .back-btn {
+            i {
+                margin-right: .3em;
             }
         }
     }

@@ -58,13 +58,20 @@
             .option {
                 padding-left: 0;
 
-                h5 {
-                    width: auto;
-
-                    span {
-                        text-align: center;
+                a {
+                    h5 {
+                        width: auto;
+    
+                        span {
+                            text-align: center !important;
+                        }
                     }
                 }
+            }
+
+            .option:nth-of-type(2n) {
+                justify-self: auto;
+                padding-right: 0;
             }
         }
     }

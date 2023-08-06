@@ -39,6 +39,9 @@ class Product
     #[ORM\ManyToOne]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'label')]
+    private ?Anime $anime = null;
+
     public function __construct()
     {
         $this->size_id = new ArrayCollection();
@@ -171,6 +174,18 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAnime(): ?Anime
+    {
+        return $this->anime;
+    }
+
+    public function setAnime(?Anime $anime): self
+    {
+        $this->anime = $anime;
 
         return $this;
     }
