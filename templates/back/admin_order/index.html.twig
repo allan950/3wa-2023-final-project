@@ -20,7 +20,7 @@
 				<section class="metrics">
 					<div class="count">
 						<div class="label">
-							<b>Number of orders</b>
+							<b>Number of users</b>
 						</div>
 						<div class="output">
 							<span>{{orders | length}}</span>
@@ -36,11 +36,10 @@
 							<th>Order date</th>
 							<th>Subtotal price</th>
 							<th>Total price</th>
-							{# <th>Items</th> #}
 							<th>actions</th>
 						</tr>
-                        <tr class="filters">
-							<form action="{{ path('app_admin_product_list_search') }}">
+						<tr class="filters">
+							<form action="{{ path('app_admin_order_list_search') }}">
 								<th>
 									<input type="text" name="id" placeholder="">
 								</th>
@@ -48,7 +47,7 @@
 									<input type="text" name="client" placeholder="">
 								</th>
 								<th>
-									<input type="date" name="order_date" placeholder="">
+									{# <input type="date" name="order_date" placeholder=""> #}
 								</th>
 								<th>
 									<input type="text" name="subtotal_price" placeholder="">
@@ -68,15 +67,21 @@
 						{% for order in orders %}
 							<tr>
 								<td>{{ order.id }}</td>
-								<td>{{ order.client.email }}</td>
+								<td>
+									{% if order.client.email is not defined %}
+										{{ order.email }}
+									{% else %}
+										{{order.client.email}}
+									{% endif %}
+								</td>
 								<td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
 								<td>{{ order.totalPriceHt|format_currency('EUR') }}</td>
 								<td>{{ order.totalPriceTtc|format_currency('EUR') }}</td>
 								{# <td>{{ order.items ? order.items|join(', ') : '' }}</td> #}
 								<td class="actions">
 									<a href="{{ path('app_admin_order_show', {'id': order.id}) }}" title="Show details">
-                                        <i class="fi fi-rs-eye"></i>
-                                    </a>
+										<i class="fi fi-rs-eye"></i>
+									</a>
 									{# <a href="{{ path('app_admin_order_edit', {'id': order.id}) }}">edit</a> #}
 								</td>
 							</tr>

@@ -1,17 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CheckoutController!{% endblock %}
+{% block title %}Hello CheckoutController!
+{% endblock %}
 
 {% block body %}
 
-   <main style="display: grid; align-items: center;height: 100vh;">
-   <div style="text-align: center;">
-        <div>
-            <h3>Le paiement de votre commande n'a pas abouti!</h3>
-        </div>
-        <p>Vous allez maintenant être redirigé vers votre panier</p>
-        <a href="{{path('app_cart')}}">OK</a>
-        </div>
-   </main>
+	<main class="checkout-error">
+		<div>
+			<div>
+				<h3>Your payment has not been completed because something might have gone wrong</h3>
+			</div>
+			<p>Click on one of the buttons below to continue browsing in the store</p>
+			<br>
+			<div class="buttons">
+				<div>
+					<a href="{{path('app_cart')}}" class="large-btn">Go back to cart</a>
+				</div>
+				<div>
+					<a href="{{path('home')}}" class="large-btn">Go back home</a>
+				</div>
+			</div>
+		</div>
+	</main>
 
 {% endblock %}

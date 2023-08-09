@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error 400
+{% endblock %}
+{% block body %}
+
+	<main class="error-page">
+
+		<div class="middle-container">
+			<div>
+				<div class="left-col">
+					<h2>Error</h2>
+					<h1>
+						<span>4</span>
+						<span>0</span>
+						<span>0</span>
+					</h1>
+				</div>
+				<div class="right-col">
+					<p>
+						The request you inquired could not go through!<br>
+						Verify that your URL is correct or click on the button below to get back on the right track
+					</p>
+				</div>
+			</div>
+
+			<br>
+			<br>
+
+			<div class="btn-container">
+				<a href="{{path('home')}}" class="large-btn">Go back home</a>
+			</div>
+		</div>
+
+
+	</main>
+
+{% endblock %}

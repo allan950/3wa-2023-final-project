@@ -2,7 +2,13 @@ $inputSize: 355px;
 
 
 
-input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea {
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],
+input[type=date],
+select,
+textarea {
     border: 1px solid #000;
     border-radius: 0;
     background-color: white;
@@ -11,6 +17,7 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
 .row.btn {
     display: grid;
     justify-items: center;
+    text-align: center;
     padding-top: 2em;
 }
 
@@ -18,22 +25,22 @@ section.container {
     width: 60%;
     display: block;
     margin: auto;
-    
+
     form {
         width: 100%;
-    
+
         .row {
             display: grid;
-        
+
             label {
                 margin-bottom: .45em;
                 text-align: left;
             }
-    
+
             input {
                 margin-bottom: 1.325em;
                 padding: .925em 1.75em;
-            } 
+            }
         }
     }
 }
@@ -41,17 +48,17 @@ section.container {
 .login-page {
     position: relative;
 
-    [type=submit] {
+    button[type=submit] {
         width: 355px;
-    border: none;
-    border-radius: 0;
-    padding: 1.05em 1.6em;
+        border: none;
+        border-radius: 0;
+        padding: 1.05em 1.6em;
     }
 
     .container {
         display: flex;
         align-items: center;
-height: 100vh;
+        height: 100vh;
 
         .visual-design {
             flex: 1;
@@ -75,24 +82,80 @@ height: 100vh;
                 h2 {
                     text-align: center;
                 }
-    
+
                 .row {
                     display: grid;
-    
+
                     label {
                         margin-bottom: .45em;
                         text-align: left;
                     }
-    
+
                     input {
                         margin-bottom: 1.325em;
                         padding: .925em 1.75em;
                     }
 
-                    label, input {
+                    label,
+                    input {
                         justify-self: center;
                         min-width: $inputSize;
                     }
+
+                    ul {
+                        margin: 0;
+                        font-size: .7em;
+                        font-family: 'Univers', Verdana, Geneva, Tahoma, sans-serif;
+                        width: 355px;
+                        justify-self: center;
+                        color: red;
+
+                        li {
+                            margin-bottom: .2em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.login-page.register {
+    .container {
+        .visual-design {
+            border-left: $seperation;
+            border-right: none;
+        }
+
+        .spaced-out {
+            .row {
+
+                >div {
+                    display: grid;
+                }
+            }
+
+            .row.checkbox {
+                width: 355px;
+                justify-self: center;
+                align-items: center;
+
+                >div {
+                    display: flex;
+                    align-items: center;
+
+                    label {
+                        min-width: auto;
+                        margin-bottom: 0;
+                    }
+
+                    input {
+                        min-width: initial;
+                        padding: 0;
+                        margin-left: 0.75em;
+                        margin-bottom: 0;
+                    }
+
                 }
             }
         }
@@ -112,19 +175,55 @@ height: 100vh;
                 position: fixed;
                 width: 100%;
                 z-index: 1;
+                border-right: none;
             }
 
             .spaced-out {
                 z-index: 2;
                 background-color: white;
-                margin: auto 0.425em;
+                margin: 0 auto;
+                max-width: 412px;
                 box-shadow: rgba(128, 128, 128, 0.5) 0 0 8px 1px;
+
+                form {
+                    max-width: 100%;
+                    display: block;
+
+                    .row {
+                        display: block;
+
+                        input {
+                            min-width: 100%;
+                        }
+                    }
+                }
             }
+        }
+
+        button[type=submit] {
+            width: 100%;
         }
     }
 
-        section.container {
-            width: 100%;
-            padding: 0 1.3em;
+    .login-page.register .container {
+
+        .visual-design {
+            border-left: none;
         }
+
+        .spaced-out .row>div {
+            display: initial;
+        }
+    }
+
+    section.container {
+        width: 100%;
+        padding: 0 1.3em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .login-page .container .spaced-out {
+        max-width: 90%;
+    }
 }

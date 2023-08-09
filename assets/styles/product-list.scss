@@ -1,6 +1,6 @@
 .product-list-page {
 
-    > h4 {
+    >h4 {
         text-align: center;
     }
 
@@ -10,7 +10,7 @@
         aside {
             flex: 1;
 
-            > div {
+            >div {
                 padding: 1.2em 2.2em;
 
                 ul {
@@ -108,6 +108,20 @@
             }
         }
     }
+
+    .mobile-view {
+        display: none;
+    }
+
+    .open-filter {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .spacer {
+        height: 80px;
+    }
 }
 
 @media only screen and (max-width: 459px) {
@@ -133,28 +147,76 @@
                 display: none;
             }
 
+            aside.show {
+                position: fixed;
+                display: block;
+                z-index: 100;
+                overflow: auto;
+                background-color: #fff;
+                width: 100%;
+                height: 100%;
+                top: 0;
+
+                form {
+                    display: grid;
+                    justify-content: center;
+                    grid-auto-columns: 80%;
+
+                    h5 {
+                        text-align: center;
+                        font-size: 1.5em;
+                        margin: 0;
+                        margin-bottom: 0.65em;
+                    }
+
+                    li {
+                        margin-bottom: 0.7em;
+                    }
+
+                    .large-btn.grey {
+                        background-color: gainsboro;
+                        color: gray;
+                    }
+                }
+
+                >div {
+                    input[type=checkbox] {
+                        margin-right: 0.7em;
+                    }
+
+                    .row .column {
+                        margin: 0 0.4em;
+                        flex: 1;
+
+                        input[type=number] {
+                            min-width: 100%;
+                        }
+                    }
+                }
+            }
+
             ul.product-list {
                 li {
                     .structure {
                         img {
                             padding: 2.3em !important;
                         }
-    
+
                         .text-body {
                             display: grid;
                             text-align: center;
                             grid-auto-rows: 2em;
-    
-                            > * {
+
+                            >* {
                                 align-self: center;
                             }
-                            
+
                             p {
                                 transform: initial;
                                 max-width: 100%;
                                 order: 2;
                             }
-    
+
                             h6 {
                                 transform: initial;
                             }
@@ -162,6 +224,10 @@
                     }
                 }
             }
+        }
+
+        .mobile-view {
+            display: block;
         }
     }
 }

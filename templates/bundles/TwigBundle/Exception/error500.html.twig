@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error 500
+{% endblock %}
+{% block body %}
+
+	<main class="error-page">
+
+		<div class="middle-container">
+			<div>
+				<div class="left-col">
+					<h2>Error</h2>
+					<h1>
+						<span>5</span>
+						<span>0</span>
+						<span>0</span>
+					</h1>
+				</div>
+				<div class="right-col">
+					<p>
+						Oops! This page is not accessible at the moment<br>
+                        Please come back later and press the button down below to move back to the previous page
+					</p>
+				</div>
+			</div>
+
+			<br>
+			<br>
+
+			<div class="btn-container">
+				<button onclick="window.history.back()" class="large-btn">Go back</button>
+			</div>
+		</div>
+
+
+	</main>
+
+{% endblock %}

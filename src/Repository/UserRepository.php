@@ -56,6 +56,55 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    public function update(array $params) 
+    {
+        $builder = $this->createQueryBuilder('u')
+            ->update('App\Entity\User', 'u')
+            ->where('u.id = ?0')
+            ->setParameter(0, $params['user_id'])
+            ->set('u.firstName', '?1')
+            ->set('u.lastName', '?2')
+            ->set('u.address', '?3')
+            ->set('u.zipcode', '?4')
+            ->set('u.city', '?5')
+            ->setParameter(1, $params['first_name'])
+            ->setParameter(2, $params['last_name'])
+            ->setParameter(3, $params['address'])
+            ->setParameter(4, $params['zipcode'])
+            ->setParameter(5, $params['city'])
+            ->getQuery()
+            ;
+
+        return $builder->execute();
+    }
+
+    public function queryFilteredList(array $load) {
+        $builder = $this->createQueryBuilder('u')
+            ->select(array("u.id", "u.email", "u.roles", "u.lastName", "u.firstName"))
+            ->where("1 = 1")
+        ;
+
+        if ($load['id']) { $builder->andWhere("u.id = :id")->setParameter("id", $load['id']); }
+        if ($load['email']) { $builder->andWhere("u.email = :email")->setParameter("email", $load['email']); }
+        /* if ($load['roles']) { 
+            if ($load['roles'] == "user") {
+                $load['roles'] = "ROLE_USER";
+            } else if ($load['roles'] == "admin") {
+                $load['roles'] = "ROLE_ADMIN";
+            } else {
+                $load['roles'] = "ROLE_USER";
+            }
+
+            //dd($load['roles']);
+
+            $builder->andWhere("JSON_CONTAINS(u.roles, :roles, '$')")->setParameter("roles", $load['roles']);
+        } */
+        if ($load['last_name']) { $builder->andWhere("u.lastName = :last_name")->setParameter("last_name", $load['last_name']); }
+        if ($load['first_name']) { $builder->andWhere("u.firstName = :first_name")->setParameter("first_name", $load['first_name']); }
+
+        return $builder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

@@ -1,46 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!{% endblock %}
+{% block title %}Your personal info
+{% endblock %}
 
 {% block body %}
 
-    {{ include('widgets/navbar/index.html.twig') }}
+	{{ include('widgets/navbar/index.html.twig') }}
 
-    <h3 style="text-align: center;">Vos Informations Personelles</h3>
+	<h3 style="text-align: center;">Your personal info</h3>
 
-    <section class="container">
-        <form action="{{path('app_dashboard_info_update')}}" method="post">
-  <div class="row">
-    <label for="inputEmail" class="form-label">Email</label>
-    <input type="email" class="form-control" name="userEmail" id="inputEmail" value="{{user.email}}" readonly>
-  </div>
-  <div class="row">
-    <label for="inputLastname" class="form-label">Last Name</label>
-    <input type="text" class="form-control" name="userLname" id="inputLastname" value="{{user.lastName}}">
-  </div>
-  <div class="row">
-    <label for="inputFirstname" class="form-label">First Name</label>
-    <input type="text" class="form-control" name="userFname" id="inputFirstname" value="{{user.firstName}}">
-  </div>
-  <div class="row">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" name="userCity" id="inputCity" value="{{user.city}}">
-  </div>
-  <div class="row">
-    <label for="inputAddress" class="form-label">Address</label>
-    <input type="text" class="form-control" name="userAddress" id="inputAddress" value="{{user.address}}">
-  </div>
-  <div class="row">
-    <label for="inputZipcode" class="form-label">Zipcode</label>
-    <input type="text" class="form-control" name="userZipcode" id="inputZipcode" value="{{user.zipcode}}">
-  </div>
-  <div class="row">
-    <button type="submit" class="large-btn">Save</button>
-  </div>
-</form>
+	<section class="container">
+		<form action="{{path('app_dashboard_info_update')}}" method="post">
+			<div class="row">
+				<label for="inputEmail" class="form-label">Email</label>
+				<input type="email" class="form-control" name="userEmail" id="inputEmail" value="{{user.email}}" readonly>
+			</div>
+			<div class="row">
+				<label for="inputLastname" class="form-label">Last Name</label>
+				<input type="text" class="form-control" name="userLname" id="inputLastname" value="{{user.lastName}}">
+			</div>
+			<div class="row">
+				<label for="inputFirstname" class="form-label">First Name</label>
+				<input type="text" class="form-control" name="userFname" id="inputFirstname" value="{{user.firstName}}">
+			</div>
+			<div class="row">
+				<label for="inputCity" class="form-label">City</label>
+				<input type="text" class="form-control" name="userCity" id="inputCity" value="{{user.city}}">
+			</div>
+			<div class="row">
+				<label for="inputAddress" class="form-label">Address</label>
+				<input type="text" class="form-control" name="userAddress" id="inputAddress" value="{{user.address}}">
+			</div>
+			<div class="row">
+				<label for="inputZipcode" class="form-label">Zipcode</label>
+				<input type="text" class="form-control" name="userZipcode" id="inputZipcode" value="{{user.zipcode}}">
+			</div>
+			<div class="row">
+				<button type="submit" class="large-btn">Save</button>
+			</div>
+		</form>
 
-    <br>
-    <br>
+		<br>
+		<br>
 
-    </section>
+	</section>
 {% endblock %}

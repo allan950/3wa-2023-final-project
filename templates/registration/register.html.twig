@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	<main class="login-page register">
+		<div class="container">
+
+			<div class="spaced-out">
+
+
+				{{ form_start(registrationForm) }}
+				<h2 class="h3 mb-3 font-weight-normal">Register</h2>
+
+
+				<div class="row">
+					{{ form_row(registrationForm.email) }}
+				</div>
+
+				<div class="row">
+					{{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+				</div>
+
+				<div class="row checkbox">
+					{{ form_row(registrationForm.agreeTerms) }}
+				</div>
+
+				<br>
+				<div class="row btn">
+					<button type="submit" class="btn">Register</button>
+				</div>
+
+				<div class="row btn">
+					<a href="{{ path('app_login') }}" class="btn">
+						Log in to your account
+					</a>
+				</div>
+
+				{{ form_end(registrationForm) }}
+			</div>
+
+
+			<div class="visual-design"></div>
+
+		</div>
+	</main>
+{% endblock %}

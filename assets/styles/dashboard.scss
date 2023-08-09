@@ -18,7 +18,7 @@
 
                 h5 {
                     font-size: 3em;
-                    width: 8em;
+                    width: 6.6em;
         
                     span {
                         display: block;
@@ -48,6 +48,21 @@
                 float: unset;
                 text-align: left;
             }
+        }
+    }
+}
+
+.dashboard.orders {
+    .empty-list {
+        height: calc(100vh - 12em);
+        display: flex;
+        align-items: center;
+
+        h6 {
+            text-align: center;
+            width: 100%;
+            font-weight: 300;
+            font-size: 1em;
         }
     }
 }

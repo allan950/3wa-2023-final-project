@@ -1,0 +1,27 @@
+.checkout-error {
+    display: grid;
+    align-items: center;
+    height: 100vh;
+
+    >div {
+        text-align: center;
+
+        .buttons {
+            display: flex;
+            
+            >div {
+                flex: 1;
+            }
+
+            >div:first-of-type {
+                text-align: end;
+                margin-right: .4em;
+            }
+
+            >div:last-of-type {
+                text-align: start;
+                margin-left: .4em;
+            }
+        }
+    }
+}

@@ -23,6 +23,24 @@ class AdminOrderController extends AbstractController
         ]);
     }
 
+    #[Route('/search', name: 'app_admin_order_list_search', methods: ['GET', 'POST'])]
+    public function filterList(Request $req, OrderRepository $orderRepository): Response 
+    {
+        $params = array(
+            "id"=> $req->query->get('id'),
+            "client"=> $req->query->get('client'),
+            "order_date"=> $req->query->get('order_date'),
+            "total_price_ht"=> $req->query->get('subtotal_price'),
+            "total_price_ttc"=> $req->query->get('total_price'),
+        );
+
+        $orders = $orderRepository->queryFilteredList($params);
+
+        return $this->render('back/admin_order/index.html.twig', [
+            'orders' => $orders,
+        ]);
+    }
+
     #[Route('/new', name: 'app_admin_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository): Response
     {

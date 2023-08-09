@@ -18,14 +18,14 @@ class Order
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $orderDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'order')]
+    #[ORM\ManyToOne(inversedBy: 'order', targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $client = null;
 
-    #[ORM\Column]
+    #[ORM\Column(scale: 2)]
     private ?float $totalPriceHt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(scale: 2)]
     private ?float $totalPriceTtc = null;
 
     #[ORM\Column(type: Types::ARRAY)]

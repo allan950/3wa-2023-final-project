@@ -18,7 +18,7 @@
 
 	<main class="product-details-page">
 		<div class="back-btn mobile-view">
-			<button type="button" onclick="history.back()">
+			<button type="button" onclick="history.go(-2)">
 				<i class="fi fi-rs-arrow-small-left"></i>
 				Back
 			</button>
@@ -33,10 +33,14 @@
 					<form action="{{ path('app_add_product_to_cart', {'id': product.id}) }}" method="post">
 						<div class="produit-container">
 							<div class="back-btn">
-								<button type="button" onclick="history.back()">
+								{# <button type="button" onclick="history.go(-2)">
 									<i class="fi fi-rs-arrow-small-left"></i>
 									Back
-								</button>
+								</button> #}
+								<a href="{{ path('app_product_list') }}">
+									<i class="fi fi-rs-arrow-small-left"></i>
+									Back
+								</a>
 							</div>
 							<h2 class="product-name">{{product.name}}</h2>
 							<div class="badge">

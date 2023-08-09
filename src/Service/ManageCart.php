@@ -64,7 +64,7 @@ class ManageCart
 
     public function getTotalTTC() {
         $totalHt = $this->getTotal();
-        $totalTtc = $totalHt * 1.2;
+        $totalTtc = $totalHt * 1;
 
         $this->totalTTC = $totalTtc;
 

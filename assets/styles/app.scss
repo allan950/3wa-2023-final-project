@@ -10,16 +10,7 @@
 @import 'dashboard.scss';
 @import 'orders.scss';
 @import 'errors.scss';
-
-
-/****************************
-*****************************
-*****************************
-            Variables
-*****************************
-*****************************/
-
-$seperation: 2px solid #000;
+@import 'checkout.scss';
 
 
 
@@ -189,152 +180,44 @@ button {
     padding: 1.05em 1.6em;
 }
 
+.flash {
+    position: fixed;
+    bottom: 0.95em;
+    left: 0.95em;
+    width: 260px;
+    height: 134px;
+    padding: 1.8em;
+    background-color: #000;
+    color: #fff;
+    font-size: .755em;
+    box-shadow: rgba(0, 0, 0, 0.4) 0 0 6px;
 
+    button {
+        right: 3px;
+        top: 3px;
+        position: absolute;
+        background-color: transparent;
+        border: none;
+        color: #fff;
 
-
-
-
-
-
-//Navbar
-
-nav {
-    width: 100%;
-    position: relative;
-
-    .navbar {
-        display: flex;
-        justify-content: center;
-
-        ul {
-            display: inline-flex;
-
-            li {
-                display: inline;
-                list-style: none;
-                margin: 6px 8px;
-                font-weight: 600;
-                text-transform: uppercase;
-
-                .lien {
-                    text-decoration: none;
-                    color: #6B9080;
-                }
-
-                .lien:hover {
-                    color: cadetblue;
-                    text-decoration: underline;
-                    font-size: large;
-                }
-
-            }
+        i {
+            vertical-align: -webkit-baseline-middle;
         }
     }
-}
 
-
-.home-page {
-    text-align: center;
-
-    h2 {
-        margin: 70px 0;
-    }
-
-    h4 {
-        margin-bottom: 30px;
-    }
-
-    .paragraphs {
-        width: 70%;
-        display: block;
-        margin: auto;
+    .text {
+        overflow: auto;
+        position: relative;
+        height: 100%;
 
         p {
-            font-size: .80em;
+            margin: 0;
+            line-height: 1.4em;
+            font-weight: 200;
         }
     }
 
-    .card {}
-}
-
-//Page catalogue
-
-#ncata {
-    display: flex;
-    justify-content: center;
-}
-
-/*.card {
-        display: inline-grid;
-        grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-        padding: 20px;
-        margin: 30px;
-        transition: transform .5s;
-        background-color: #d8f3dc;
-          
-            &::after {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              transition: opacity 2s cubic-bezier(.165, .84, .44, 1);
-              box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .15);
-              content: '';
-              opacity: 0;
-              z-index: -1;
-            }
-          
-            &:hover,
-            &:focus {
-              transform: scale3d(1.006, 1.006, 1);
-          
-              &::after {
-                opacity: 1;
-              }
-            }
-          }*/
-
-.structure {
-    position: relative;
-
-    .body {
-        position: absolute;
-        bottom: 0;
-
-        .price {
-            padding: 10px;
-            text-align: center;
-        }
-    }
-}
-
-
-
-.dashboard-home {
-
-    .grid {
-        display: grid;
-        justify-content: center;
-
-        .flex {
-            display: inline-flex;
-            justify-content: flex-start;
-            flex-flow: wrap;
-            width: 900px;
-
-            .container {
-                width: 400px;
-                border-radius: 12px;
-                border: 1px solid silver;
-                margin: 0 14px;
-                margin-bottom: 28px;
-
-                a {
-                    width: 100%;
-                    text-align: center;
-                }
-            }
-        }
+    .text::-webkit-scrollbar {
+        width: 4px;
     }
 }

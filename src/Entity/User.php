@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Validator as Assert2;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,6 +21,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+        mode: 'html5-allow-no-tld',
+        normalizer: 'trim'
+    )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -26,34 +35,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Assert\NotCompromisedPassword]
     #[ORM\Column]
     private ?string $password = null;
-
+    
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 100)]
     private ?string $lastName = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 100)]
     private ?string $firstName = null;
 
-
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 255)]
     private ?string $zipcode = null;
-
-    #[ORM\ManyToMany(targetEntity: Basket::class, mappedBy: 'user_id')]
-    private Collection $baskets;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Order::class)]
     private Collection $order;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $city = null;
 
     public function __construct()
     {
-        $this->baskets = new ArrayCollection();
         $this->order = new ArrayCollection();
     }
 
@@ -177,33 +187,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Basket>
-     */
-    public function getBaskets(): Collection
-    {
-        return $this->baskets;
-    }
-
-    public function addBasket(Basket $basket): self
-    {
-        if (!$this->baskets->contains($basket)) {
-            $this->baskets->add($basket);
-            $basket->addUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBasket(Basket $basket): self
-    {
-        if ($this->baskets->removeElement($basket)) {
-            $basket->removeUserId($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Order>
      */
     public function getOrder(): Collection
@@ -243,5 +226,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->city = $city;
 
         return $this;
+    }
+
+    public function getSecondaryAttributes(): array
+    {
+        $attrs = array(
+            "lastName"=>$this->getLastName(),
+            "firstName"=>$this->getFirstName(),
+            "address"=>$this->getAddress(),
+            "zipcode"=>$this->getZipcode(),
+            "city"=>$this->getCity()
+        );
+
+        return $attrs;
     }
 }

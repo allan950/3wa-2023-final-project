@@ -3,9 +3,25 @@
 {% block title %}New Anime{% endblock %}
 
 {% block body %}
-    <h1>Create new Anime</h1>
+<div class="admin-page">
+
+{{ include('back/index.html.twig') }}
+
+    <div class="content">
+
+    <div>
+
+    <header>
+        <a href="{{ path('app_admin_anime_index') }}" class="back-btn">
+            <i class="fi fi-rs-arrow-left"></i> back to list
+        </a>
+
+        <h3>Create new Anime</h3>
+    </header>
 
     {{ include('back/admin_anime/_form.html.twig') }}
 
-    <a href="{{ path('app_admin_anime_index') }}">back to list</a>
+    </div>
+    </div>
+    </div>
 {% endblock %}

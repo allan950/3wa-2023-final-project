@@ -9,7 +9,7 @@
 					<ul>
 						<li>
 							<p>
-								<a href="{{ path('app_product_list') }}">Catalogue</a>
+								<a href="{{ path('app_product_list') }}">Catalog</a>
 							</p>
 						</li>
 						{% if app.user %}
@@ -52,7 +52,7 @@
 							<li>
 								<a href="{{ path('app_cart') }}" title="Cart">
 									<i class="fi fi-rs-shopping-cart"></i>
-									{% if app.request.getSession().get("cart") is defined and app.request.getSession().get("cart") is not null and app.request.getSession().get("cart").getTotalCount() > 0 %}
+									{% if app.request.getSession().get("cart") is defined and app.request.getSession().get("cart") is not null and app.request.getSession().get("cart") is not empty and app.request.getSession().get("cart").getTotalCount() > 0 %}
 									<div class="cart-badge">
 										<span>{{ app.request.getSession().get("cart").getTotalCount() }}</span>
 									</div>
@@ -69,7 +69,7 @@
                 <ul>
 						<li>
 							<p>
-								<a href="{{ path('app_product_list') }}">Catalogue</a>
+								<a href="{{ path('app_product_list') }}">Catalog</a>
 							</p>
 						</li>
 						{% if app.user %}
@@ -80,7 +80,7 @@
 							</li>
 						{% endif %}
 					</ul>
-					<button type="button" onclick="openMobileNavMenu(false)">Close</button>
+					<button type="button" class="large-btn" onclick="openMobileNavMenu(false)">Close</button>
 					</div>
             </div>
 		</nav>

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\User;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,49 +19,107 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CheckoutController extends AbstractController
 {
     #[Route('/checkout', name: 'app_checkout')]
-    public function index(Request $req): Response
+    public function index(Request $req, UserRepository $userRepo, ProductRepository $productRepo): Response
     {
         $items = $req->getSession()->get("cart")->getCart();
 
         if ($this->getUser()) {
 
-            if ($items) {
+            $user_id = $this->getUser()->getId();
+            $user = $userRepo->find($this->getUser($user_id));
 
-                \Stripe\Stripe::setApiKey($this->getParameter("api_key_stripe"));
+            $isAttrNullOrEmpty = false;
 
-                $order = [];
-                $tokenProvider = $this->container->get('security.csrf.token_manager');
-                $token = $tokenProvider->getToken('stripe_token')->getValue();
-
-                foreach ($items as $key => $item) {
-                    $order[$key] = [
-                        'price_data' => [
-                            'currency' => 'eur',
-                            'product_data' => [
-                                'name' => $item["name"],
-                            ],
-                            'unit_amount' => intval($item["price"]) * 100,
-                        ],
-                        'quantity' => $item["quantity"],
-                    ];
+            foreach ($user->getSecondaryAttributes() as $el) {
+                if (is_null($el) || empty($el)) {
+                    $isAttrNullOrEmpty = true;
+                    break;
                 }
+            }
 
-                //dd($order);
+            if (!$isAttrNullOrEmpty) {
 
-                $hostname = $req->headers->get('host');
+                if ($items) {
 
-                $session = \Stripe\Checkout\Session::create([
-                    'line_items' => [$order],
-                    'mode' => 'payment',
-                    'success_url' => "http://$hostname/checkout_success/" . $token,
-                    'cancel_url' => "http://$hostname/checkout_error",
-                ]);
+                    \Stripe\Stripe::setApiKey($this->getParameter("api_key_stripe"));
 
-                $req->getSession()->set("order_payment_id", $session->id);
+                    $order = [];
+                    $tokenProvider = $this->container->get('security.csrf.token_manager');
+                    $token = $tokenProvider->getToken('stripe_token')->getValue();
 
-                return $this->redirect($session->url, 303);
+
+                    $ids = array();
+
+                    foreach ($items as $key => $val) {
+                        array_push($ids, strval($val['id']));
+                    }
+
+                    $dbFindings = $productRepo->findBy(array("id" => $ids), array("id" => 'ASC'));
+
+                    //dd($dbFindings);
+                    $newArr = array();
+
+                    foreach ($items as $item) {
+                        $newArr[$item['id']] = $item;
+                    }
+
+                    $isThereAnIssue = false;
+
+                    foreach ($dbFindings as $key => $val) {
+                        $item = $newArr[$val->getId()];
+
+                        dump(gettype($item['price']));
+                        dump(gettype($val->getPrice()));
+
+                        if (($item['price'] != $val->getPrice() && gettype($item['price']) != gettype($val->getPrice())) ||
+                            ($item['name'] != $val->getName() && gettype($item['name']) != gettype($val->getName()))
+                        ) {
+                            $isThereAnIssue = true;
+                        }
+                    }
+
+                    if (!$isThereAnIssue) {
+
+
+                        foreach ($items as $key => $item) {
+                            $order[$key] = [
+                                'price_data' => [
+                                    'currency' => 'eur',
+                                    'product_data' => [
+                                        'name' => $item["name"],
+                                    ],
+                                    'unit_amount' => intval($item["price"]) * 100,
+                                ],
+                                'quantity' => $item["quantity"],
+                            ];
+                        }
+
+                        //dd($order);
+
+                        $hostname = $req->headers->get('host');
+
+                        $session = \Stripe\Checkout\Session::create([
+                            'line_items' => [$order],
+                            'mode' => 'payment',
+                            'success_url' => "http://$hostname/checkout_success/" . $token,
+                            'cancel_url' => "http://$hostname/checkout_error",
+                        ]);
+
+                        $req->getSession()->set("order_payment_id", $session->id);
+
+                        return $this->redirect($session->url, 303);
+                    } else {
+                        $req->getSession()->set("cart", "");
+
+                        $this->addFlash('notice', 'Something went wrong! Your order could not be processed');
+                        return $this->redirect('/');
+                    }
+                } else {
+                    return $this->redirect('/product/list');
+                }
             } else {
-                return $this->redirect('/product/list');
+                $this->addFlash('notice', 'There are some missing info preventing the ordering. Please, fill in the blank text fields');
+                return $this->redirect('/dashboard/info');
             }
         } else {
             return $this->redirect("/login");
@@ -79,7 +139,7 @@ class CheckoutController extends AbstractController
                 $req->getSession()->set("order_payment_id", "");
             }
 
-            $currentUser = $userRepository->findOneBy( array("id" => $this->getUser()->getId()));
+            $currentUser = $userRepository->findOneBy(array("id" => $this->getUser()->getId()));
 
             $order = new Order();
             $order->setOrderDate(new DateTime())
@@ -94,8 +154,7 @@ class CheckoutController extends AbstractController
                 ->setShipFname($currentUser->getFirstName())
                 ->setBillAddr($currentUser->getAddress())
                 ->setBillCity($currentUser->getCity())
-                ->setBillZipcode($currentUser->getZipcode())
-            ;
+                ->setBillZipcode($currentUser->getZipcode());
 
             $orderRepository->save($order, true);
 
@@ -108,7 +167,8 @@ class CheckoutController extends AbstractController
     }
 
     #[Route('/checkout_error', name: 'app_checkout_error')]
-    public function failedCheckout() {
+    public function failedCheckout()
+    {
         return $this->render('checkout/failed.html.twig', []);
     }
 }

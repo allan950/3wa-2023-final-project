@@ -30,6 +30,24 @@ class AdminUserController extends AbstractController
         ]);
     }
 
+    #[Route('/search', name: 'app_admin_user_list_search', methods: ['GET', 'POST'])]
+    public function filteredList(Request $req, UserRepository $userRepo): Response
+    {
+        $params = array(
+            "id"=> $req->query->get('id'),
+            "email"=> $req->query->get('email'),
+            "roles"=> $req->query->get('roles'),
+            "last_name"=> $req->query->get('lname'),
+            "first_name"=> $req->query->get('fname'),
+        );
+
+        $users = $userRepo->queryFilteredList($params);
+
+        return $this->render('back/admin_user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository): Response
     {

@@ -4,13 +4,30 @@
 
 {% block body %}
 
+    <script>
+        function preventBack() {
+            window.history.forward();
+            setTimeout(preventBack(), 0);
+        }
+
+        function goHomeAuto() {
+            window.location.href = '/';
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(goHomeAuto(), 6000);
+        });
+    </script>
+
    <main style="display: grid; align-items: center;height: 100vh;">
    <div style="text-align: center;">
         <div>
-            <h3>Votre a commande a été effectué avec succès</h3>
+            <h3>Your order has been completed with success</h3>
         </div>
-        <p>Cliquez sur le bouton ci-dessous pour retourner sur la liste de produits</p>
-        <a href="{{path('app_product_list')}}">Continuer vos achats</a>
+        <p>You are going to be redirected to the home page in a few seconds...</p>
+        <p>Otherwise, click on the button below</p>
+        <br>
+        <a href="{{path('home')}}" class="large-btn">Go Home</a>
         </div>
    </main> 
 

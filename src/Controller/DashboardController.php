@@ -18,7 +18,6 @@ class DashboardController extends AbstractController
 
     public function __construct(private UserRepository $userRepository)
     {
-
     }
 
     #[Route('/', name: 'app_dashboard')]
@@ -32,38 +31,63 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/info', name: 'app_dashboard_info')]
-    public function accessPersonalInfo() {
-        $currentUser = $this->userRepository->findOneBy( array("id" => $this->getUser()->getId()));
+    public function accessPersonalInfo()
+    {
+        $currentUser = $this->userRepository->findOneBy(array("id" => $this->getUser()->getId()));
 
 
-        
+
         return $this->render('dashboard/personal-info/index.html.twig', [
             "user" => $currentUser,
         ]);
     }
 
     #[Route('/info/update', name: 'app_dashboard_info_update')]
-    public function updateInfo(Request $req, UserRepository $userRepository) {
-        //dd($req->request);
+    public function updateInfo(Request $req, UserRepository $userRepository)
+    {
+        $load = array(
+            "user_id" => $this->getUser()->getId(),
+            "last_name" => $req->request->get("userLname"),
+            "first_name" => $req->request->get("userFname"),
+            "city" => $req->request->get("userCity"),
+            "address" => $req->request->get("userAddress"),
+            "zipcode" => $req->request->get("userZipcode")
+        );
 
-        $currentUser = $this->userRepository->findOneBy( array("id" => $this->getUser()->getId()));
-        $currentUser->setLastName($req->request->get("userLname"))
-        ->setFirstName($req->request->get("userFname"))
-        ->setCity($req->request->get("userCity"))
-        ->setAddress($req->request->get("userAddress"))
-        ->setZipcode($req->request->get("userZipcode"));
+        $forbidden = array(
+            '<script .*?>.*?<\/script>', '<script>.*?<\/script>',
+            '<a .*?>.*?<\/a>', '<a>.*?<\/a>'
+        );
 
-        $userRepository->save($currentUser, true);
-        
+        $isThereError = false;
+
+        foreach ($load as $attr) {
+
+            foreach ($forbidden as $val) {
+                dump($val);
+
+                if (preg_match("/^$val+$/", $attr, $matches) == 1) {
+                    $isThereError = true;
+                    $this->addFlash("notice", "Your data has not been updated! Please review your inputs before submitted your changes");
+                    return $this->redirect('/dashboard/info');
+                }
+            }
+        }
+
+        if (!$isThereError) {
+            $userRepository->update($load);
+        }
+
         return $this->redirect('/dashboard/info');
     }
 
     #[Route('/orders', name: 'app_dashboard_orders')]
-    public function accessOrders(OrderRepository $orderRepo) {
-        
+    public function accessOrders(OrderRepository $orderRepo)
+    {
+
         $orders = $orderRepo->findBy(array("client" => $this->getUser()));
         $modalItems = null;
-        
+
         return $this->render('dashboard/orders/index.html.twig', [
             "orders" => $orders,
             "modalItems" => $modalItems

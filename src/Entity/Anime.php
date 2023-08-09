@@ -17,6 +17,8 @@ class Anime
 
     #[ORM\Column(length: 255)]
     private ?string $label = null;
+    /* #[ORM\OneToMany(mappedBy: 'anime_id', targetEntity: Product::class)]
+    private Collection $label; */
 
     /* public function __construct()
     {

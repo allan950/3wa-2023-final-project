@@ -74,29 +74,35 @@ class ProductController extends AbstractController
     public function addProductToCart(Product $product, Request $req, $id) {
         $session = $req->getSession();
         $quantity = $req->request->get("itemQuantity");
-        
-        if ($session->get("cart")) {
-            $cart = $session->get("cart");
+
+        if (is_numeric($quantity) && intval($quantity) > 0 && intval($quantity) < 11) {
+            if ($session->get("cart")) {
+                $cart = $session->get("cart");
+            }
+            else {
+                $cart = new ManageCart();
+            }
+            
+            $item = [
+                "id" => $product->getId(),
+                "name" => $product->getName(),
+                "price" => $product->getPrice(),
+                "quantity" => intval($quantity),
+                "image" => $product->getUrlimg()
+            ];
+    
+            $cart->addItemToCart($item, $quantity);
+            $session->set("cart", $cart);
+    
+            $route = $req->headers->get('referer');
+    
+            return $this->redirect($route);
+        } else {
+            $route = $req->headers->get('referer');
+
+            $this->addFlash('notice', 'There was an error. Your item has not be added to the cart');
+            return $this->redirect($route);
         }
-        else {
-            $cart = new ManageCart();
-        }
         
-        $item = [
-            "id" => $product->getId(),
-            "name" => $product->getName(),
-            "price" => $product->getPrice(),
-            "quantity" => intval($quantity),
-            "image" => $product->getUrlimg()
-        ];
-
-        $cart->addItemToCart($item, $quantity);
-        $session->set("cart", $cart);
-
-        $route = $req->headers->get('referer');
-
-        return $this->redirect($route);
-        
-        //return $this->redirect("/product/product/".$id);
     }
 }

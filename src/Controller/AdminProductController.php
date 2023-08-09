@@ -26,9 +26,15 @@ class AdminProductController extends AbstractController
     #[Route('/search', name: 'app_admin_product_list_search', methods: ['GET', 'POST'])]
     public function filteredList(Request $req, ProductRepository $productRepo): Response
     {
-        $params = $req->query;
+        $params = array(
+            "id"=>$req->query->get('id'),
+            "name"=>$req->query->get('name'),
+            "price"=>$req->query->get('price'),
+            "anime"=>$req->query->get('anime'),
+            "category"=>$req->query->get('category'),
+        );
 
-        $products = $productRepo->queryFilteredList(intval($params->get('id')), $params->get('name'), floatval($params->get('price')), $params->get('category'));
+        $products = $productRepo->queryFilteredList($params);
 
         return $this->render('back/admin_product/index.html.twig', [
             'products' => $products,

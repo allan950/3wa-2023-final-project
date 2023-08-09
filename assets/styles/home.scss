@@ -18,19 +18,23 @@
         .box-33 {
             width: calc(100% / 3);
             display: inherit;
-            align-items: center;    
+            align-items: center;
 
             a {
                 padding: 0.875em;
 
                 img {
                     max-width: 100%;
+                    margin: auto;
+                    display: block;
                 }
             }
         }
     }
 
     .categories {
+        border-bottom: none;
+
         ul {
             display: flex;
 
@@ -43,15 +47,13 @@
 
                     img {
                         max-height: 240px;
+                        margin: auto;
+                        display: block;
                     }
-                }
-            }
 
-            li:hover {
-                background-color: #000;
-
-                a {
-                    color: #fff;
+                    .description {
+                        text-align: center;
+                    }
                 }
             }
         }
@@ -63,13 +65,13 @@
 
         .slidershow {
             position: relative;
-display: flex;
-align-items: center;
+            display: flex;
+            align-items: center;
 
             nav {
                 z-index: 10;
                 display: block;
-position: absolute;
+                position: absolute;
             }
 
             .nav-btn {
@@ -118,9 +120,10 @@ position: absolute;
     }
 }
 
+
 @media only screen and (max-width: 768px) {
     .home-page {
-    
+
         .top-boxes {
 
             .box {
@@ -129,6 +132,10 @@ position: absolute;
 
             .box:not(:last-of-type) {
                 border-bottom: 1px solid #000;
+            }
+
+            .box-33 a img {
+                width: 70%;
             }
         }
 
@@ -139,11 +146,17 @@ position: absolute;
                 li {
                     flex: 1 0 50%;
                 }
-            }           
+            }
         }
 
         .recommendations {
             display: none;
         }
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    .home-page .top-boxes .box-33 a img {
+        width: 100%;
     }
 }

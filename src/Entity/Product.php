@@ -21,31 +21,24 @@ class Product
     #[ORM\Column(length: 2000)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(scale: 2)]
     private ?float $price = null;
 
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
-    #[ORM\ManyToMany(targetEntity: Size::class, inversedBy: 'products')]
-    private Collection $size_id;
-
-    #[ORM\ManyToMany(targetEntity: Basket::class, mappedBy: 'product_id')]
-    private Collection $baskets;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlimg = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'label')]
+    #[ORM\ManyToOne(inversedBy: 'label', targetEntity: Anime::class)]
     private ?Anime $anime = null;
 
     public function __construct()
     {
-        $this->size_id = new ArrayCollection();
-        $this->baskets = new ArrayCollection();
+
     }
 
 
@@ -99,57 +92,6 @@ class Product
     public function setCode(string $code): self
     {
         $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Size>
-     */
-    public function getSizeId(): Collection
-    {
-        return $this->size_id;
-    }
-
-    public function addSizeId(Size $sizeId): self
-    {
-        if (!$this->size_id->contains($sizeId)) {
-            $this->size_id->add($sizeId);
-        }
-
-        return $this;
-    }
-
-    public function removeSizeId(Size $sizeId): self
-    {
-        $this->size_id->removeElement($sizeId);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Basket>
-     */
-    public function getBaskets(): Collection
-    {
-        return $this->baskets;
-    }
-
-    public function addBasket(Basket $basket): self
-    {
-        if (!$this->baskets->contains($basket)) {
-            $this->baskets->add($basket);
-            $basket->addProductId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBasket(Basket $basket): self
-    {
-        if ($this->baskets->removeElement($basket)) {
-            $basket->removeProductId($this);
-        }
 
         return $this;
     }
