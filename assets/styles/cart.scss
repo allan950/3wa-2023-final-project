@@ -130,6 +130,19 @@ overflow: auto;
                         height: 6em;
                         padding: 0;
                     }
+
+                    .card-body {
+                        .card-name-and-price, .card-quantity {
+                            padding-left: 0.355em;
+                            padding-right: 0.355em;
+                        }
+
+                        .card-quantity {
+                            p {
+                                text-align: center;
+                            }
+                        }
+                    }
                 }
             }
 

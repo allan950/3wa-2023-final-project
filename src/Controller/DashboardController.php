@@ -56,15 +56,19 @@ class DashboardController extends AbstractController
 
         $forbidden = array(
             '<script .*?>.*?<\/script>', '<script>.*?<\/script>',
-            '<a .*?>.*?<\/a>', '<a>.*?<\/a>'
+            '<a .*?>.*?<\/a>', '<a>.*?<\/a>',
+            '<head .*?>.*?<\/head>', '<head>.*?<\/head>',
+            '<body .*?>.*?<\/body>', '<body>.*?<\/body>',
+            '<iframe .*?>.*?<\/iframe>', '<iframe>.*?<\/iframe>',
+            '<link .*?>'
         );
 
         $isThereError = false;
 
-        foreach ($load as $attr) {
+        foreach ($load as $key => $attr) {
 
             foreach ($forbidden as $val) {
-                dump($val);
+                strip_tags($load[$key]);
 
                 if (preg_match("/^$val+$/", $attr, $matches) == 1) {
                     $isThereError = true;

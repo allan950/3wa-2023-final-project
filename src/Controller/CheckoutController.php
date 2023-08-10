@@ -68,9 +68,6 @@ class CheckoutController extends AbstractController
                     foreach ($dbFindings as $key => $val) {
                         $item = $newArr[$val->getId()];
 
-                        dump(gettype($item['price']));
-                        dump(gettype($val->getPrice()));
-
                         if (($item['price'] != $val->getPrice() && gettype($item['price']) != gettype($val->getPrice())) ||
                             ($item['name'] != $val->getName() && gettype($item['name']) != gettype($val->getName()))
                         ) {
@@ -88,7 +85,7 @@ class CheckoutController extends AbstractController
                                     'product_data' => [
                                         'name' => $item["name"],
                                     ],
-                                    'unit_amount' => intval($item["price"]) * 100,
+                                    'unit_amount' => floatval($item["price"]) * 100,
                                 ],
                                 'quantity' => $item["quantity"],
                             ];

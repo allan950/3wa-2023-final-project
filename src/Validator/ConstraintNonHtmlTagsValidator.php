@@ -16,12 +16,14 @@ class ConstraintNonHtmlTagsValidator extends ConstraintValidator
         }
 
         $forbidden = array('<script .*?>.*?<\/script>', '<script>.*?<\/script>', 
-            '<a .*?>.*?<\/a>', '<a>.*?<\/a>'
+            '<a .*?>.*?<\/a>', '<a>.*?<\/a>',
+            '<head .*?>.*?<\/head>', '<head>.*?<\/head>',
+            '<body .*?>.*?<\/body>', '<body>.*?<\/body>',
+            '<iframe .*?>.*?<\/iframe>', '<iframe>.*?<\/iframe>',
+            '<link .*?>'
         );
         
         foreach($forbidden as $val) {
-            dump($val);
-
             if (preg_match("/^$val+$/", $value, $matches) == 1) {
                 $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)

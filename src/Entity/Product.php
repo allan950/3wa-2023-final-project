@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use App\Validator as Assert2;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,18 +16,22 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 2000)]
     private ?string $description = null;
 
     #[ORM\Column(scale: 2)]
     private ?float $price = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 255)]
     private ?string $code = null;
 
+    #[Assert2\ConstraintNonHtmlTags]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlimg = null;
 
