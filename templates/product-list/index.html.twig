@@ -191,6 +191,8 @@
 		} catch (e) {
 			const toast = createToast(e);
 			document.body.innerHTML += toast;
+
+			closeToast();
 		}
 	}
 

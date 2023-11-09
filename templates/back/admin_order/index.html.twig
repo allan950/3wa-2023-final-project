@@ -169,6 +169,8 @@
 					} catch (e) {
 						const toast = createToast(e);
 						$('body').append(toast);
+
+						closeToast();
 					}
 				});
 			});
