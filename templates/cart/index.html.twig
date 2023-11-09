@@ -36,6 +36,9 @@
 								<a href="{{path('app_cart_remove_item', {"id": item.id})}}">
 									<i class="fi fi-rs-trash"></i>
 								</a>
+								{# <a>
+									<i class="fi fi-rs-trash"></i>
+								</a> #}
 							</div>
 						</div>
 
@@ -74,4 +77,23 @@
 		</main>
 
 	{% endif %}
+
+
+	<script>
+		setTimeout(function() {
+			$(document).ready(function() {
+				$('.card .remove-from-cart a').click(function(e) {
+					e.preventDefault();
+
+					$(this).closest('.card').animate({
+						opacity: 0,
+						height: 0
+					});
+
+					window.location.href = window.location.origin + $(this).attr('href');
+				});
+			});
+		}, 500);
+	</script>
+
 {% endblock %}

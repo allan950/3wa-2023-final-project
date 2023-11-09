@@ -19,7 +19,7 @@
 			<aside>
 				<div>
 
-					<form action="{{ path('app_product_list_filtered') }}">
+					<form id="filter-form" action="{{ path('app_product_list_filtered') }}" onsubmit="return checkEntries(event);">
 
 						<h5>Anime</h5>
 						<ul>
@@ -106,7 +106,7 @@
 
 						<br>
 
-						<button type="submit" class="large-btn">Apply Filter</button>
+						<button type="submit" id="filter-btn" class="large-btn">Apply Filter</button>
                         
                         <br>
 
@@ -142,8 +142,14 @@
 
 	</main>
 
+
+	<script src="/js/utils.js"></script>
+
     <script>
 	var filters = document.getElementsByTagName('aside')[0];
+
+	const filterSubmitButton = document.querySelector('#filter-btn');
+
 	var body = document.body;
 
 	function openMobileFilters(open) {
@@ -155,6 +161,40 @@
 			filters.classList.remove('show');
 		}
 	}
+
+	const checkEntries = (event) => {
+		event.preventDefault();
+
+		const minPriceInput = document.querySelector("#min-price"),
+		maxPriceInput = document.querySelector("#max-price"),
+		animeCheckboxes = document.querySelectorAll("*[name='anime[]']:checked"),
+		categoryCheckboxes = document.querySelectorAll("*[name='category[]']:checked");
+
+
+		const minPriceNum = Number(minPriceInput.value);
+		const maxPriceNum = Number(maxPriceInput.value);
+		
+		try {
+
+			if (animeCheckboxes.length === 0 && categoryCheckboxes.length === 0 && maxPriceInput.value.length === 0 && minPriceInput.value.length === 0) {
+				throw "At least one of the filter options should be selected";
+			} else if ((minPriceInput.value != "" && minPriceNum < 1 || minPriceNum > 60) ||
+				(maxPriceInput.value != "" && maxPriceNum < 1 || maxPriceNum > 60)
+			) {
+				throw "The text fields should have a value comprise between 1 and 60";
+			} else if (isNaN(minPriceInput.value) || isNaN(maxPriceInput.value)) {
+				throw "The values in the text fields must only be numbers";
+			}
+
+			document.querySelector('#filter-form').submit();
+
+		} catch (e) {
+			const toast = createToast(e);
+			document.body.innerHTML += toast;
+		}
+	}
+
+
 </script>
 
 {% endblock %}

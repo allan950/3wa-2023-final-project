@@ -24,19 +24,19 @@
 					</div>
 				</section>
 
-				<table class="table">
+				<table class="table" data-products="{{products | serialize(format = 'json')}}">
 					<thead>
 						<tr>
 							<th></th>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Price</th>
-							<th>Anime</th>
-							<th>Category</th>
+							<th data-order="1" data-category="id">Id</th>
+							<th data-order="0" data-category="name">Name</th>
+							<th data-order="0" data-category="price">Price</th>
+							<th data-order="0" data-category="anime">Anime</th>
+							<th data-order="0" data-category="category">Category</th>
 							<th></th>
 						</tr>
 						<tr class="filters">
-							<form action="{{ path('app_admin_product_list_search') }}">
+							<form id="form-filter" action="{{ path('app_admin_product_list_search') }}">
 								<th></th>
 								<th>
 									<input type="text" name="id" placeholder="">
@@ -48,7 +48,7 @@
 									<input type="text" name="price" placeholder="">
 								</th>
 								<th>
-									<select name="anime" id="">
+									<select name="anime">
 										<option value="all">All</option>
 										<option value="one piece">One piece</option>
 										<option value="attack on titan">Attack on Titan</option>
@@ -58,7 +58,7 @@
 									</select>
 								</th>
 								<th>
-									<select name="category" id="">
+									<select name="category">
 										<option value="all">All</option>
 										<option value="t-shirt">T-shirt</option>
 										<option value="sweatshirt">Sweatshirt</option>
@@ -106,4 +106,64 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="{{ asset('/js/utils.js') }}"></script>
+	
+	<script>
+		setTimeout(function() {
+
+			$(function() {
+				const id = $('input[name="id"]'), name = $('input[name="name"]'), price = $('input[name="price"]'), anime = $('select[name="anime"]'), category = $('select[name="category"]');
+				
+				$products = $('.table').data('products');
+
+				$('.table th[data-category]').on('click', function() {
+					if ($products.length > 1) {
+						let sortedData = filterByCategory($products, $(this));
+						let sortedRows = "";
+						
+
+						sortedData.map(function(p) {
+							let price = '€'+p.price.toFixed(2);
+							sortedRows += `
+							<tr>
+								<td><img src="${p.urlimg}" height="55" alt=""></td>
+								<td>${ p.id }</td>
+								<td>${ p.name }</td>
+								<td>${ price }</td>
+								<td>${ p.anime }</td>
+								<td>${ p.category }</td>
+								<td class="actions">
+									<a href="/admin/product/${p.id}" title="Show details">
+										<i class="fi fi-rs-eye"></i>
+									</a>
+									<a href="/admin/product/${p.id}/edit" title="Edit">
+										<i class="fi fi-rs-pencil"></i>
+									</a>
+								</td>
+							</tr>
+						`;
+						});
+
+						$('.table tbody').html(sortedRows);
+					}
+				});
+
+				$('#form-filter').on('submit', function(e) {
+					e.preventDefault();
+
+					try {
+						if (id.val().length < 1 && name.val().length < 1 && price.val().length < 1 && anime.val().length < 1 && category.val().length < 1) { throw "At least one of the fields in the filter has to be filled"; } 
+						else if (isNaN(id.val())) { throw "ID field value should be numeric!"; }
+						else if (isNaN(price.val())) { throw "Price field value should be numeric!"; }
+
+						this.submit();
+					} catch (e) {
+						const toast = createToast(e);
+						$('body').append(toast);
+					}
+				});
+			});
+		}, 500);
+	</script>
 {% endblock %}

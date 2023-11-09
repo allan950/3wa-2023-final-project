@@ -10,10 +10,10 @@
 	<h3 style="text-align: center;">Your personal info</h3>
 
 	<section class="container">
-		<form action="{{path('app_dashboard_info_update')}}" method="post">
+		<form id="info-form" action="{{path('app_dashboard_info_update')}}" method="post" onsubmit="event.preventDefault()">
 			<div class="row">
 				<label for="inputEmail" class="form-label">Email</label>
-				<input type="email" class="form-control" name="userEmail" id="inputEmail" value="{{user.email}}" readonly>
+				<span>{{user.email}}</span>
 			</div>
 			<div class="row">
 				<label for="inputLastname" class="form-label">Last Name</label>
@@ -44,4 +44,65 @@
 		<br>
 
 	</section>
+	
+	<script src="{{ asset('/js/utils.js') }}"></script>
+	
+	<script>
+
+		class InfoForm {
+			email;
+			last_name;
+			first_name;
+			city;
+			address;
+			zipcode;
+			#is_form_submittable = false;
+
+			constructor(email, last_name, first_name, address, zipcode) {
+				this.email = email;
+				this.last_name = last_name;
+				this.first_name = first_name;
+				this.address = address;
+				this.zipcode = zipcode;
+			}
+
+			verifyRequiredFields() {
+				try {
+					if (this.email.val().length < 1) { throw "Email field cannot be left empty"; } 
+					else if (this.last_name.val().length < 1) { throw "Last Name field cannot be left empty"; }
+					else if (this.first_name.val().length < 1) { throw "First Name field cannot be left empty"; }
+					else if (this.address.val().length < 1) { throw "Address field cannot be left empty"; }
+					else if (this.zipcode.val().length < 1) { throw "Zipcode field cannot be left empty"; }
+
+					this.#is_form_submittable = true;
+				} catch (e) {
+					const toast = createToast(e);
+					$('body').append(toast);
+				}
+			}
+
+			isFormSubmittable() {
+				return this.#is_form_submittable;
+			}
+		}
+
+		setTimeout(function() {
+
+			const form = new InfoForm($('#inputEmail'), $('#inputLastname'), $('#inputFirstname'), $('#inputAddress'), $('#inputZipcode'));
+			form.city = $('#inputCity');
+
+			$(document).ready(function() {
+				$('#info-form').on('submit', function (e) {
+					e.preventDefault();
+
+					form.verifyRequiredFields();
+					const canSubmit = form.isFormSubmittable();
+
+					if (canSubmit) {
+						this.submit();
+					}
+				});
+			})
+		}, 1500);
+	</script>
 {% endblock %}

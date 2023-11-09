@@ -4,15 +4,10 @@
 	{{product.name}}
 {% endblock %}
 
+
+
 {% block body %}
 
-	{# {% javascripts
-		        '../public/product-list.js'
-		
-		        filter='?uglifyjs2'
-		    %}
-		    <script src="{{ asset_url }}" type="text/javascript"></script>
-		    {% endjavascripts %} #}
 
 	{% include('widgets/navbar/index.html.twig') %}
 
@@ -25,18 +20,26 @@
 		</div>
 		<div class="container">
 			<div class="image-container">
-				<img src={{product.urlimg}}>
+				<img class="main-image" src={{product.urlimg}}>
+				<div id="zoomed-in-picture"></div>
+
+				<div class="miniature">
+					<div class="relative">
+						<img src={{product.urlimg}}>
+					</div>
+				</div>
 			</div>
 			<div class="details">
 				<div>
 
-					<form action="{{ path('app_add_product_to_cart', {'id': product.id}) }}" method="post">
+					<form id="add-to-cart-form" action="{{ path('app_add_product_to_cart', {'id': product.id}) }}" method="post" onsubmit="checkEntries(event);">
 						<div class="produit-container">
-							<div class="back-btn">
+							<div
+								class="back-btn">
 								{# <button type="button" onclick="history.go(-2)">
-									<i class="fi fi-rs-arrow-small-left"></i>
-									Back
-								</button> #}
+																																									<i class="fi fi-rs-arrow-small-left"></i>
+																																									Back
+																																								</button> #}
 								<a href="{{ path('app_product_list') }}">
 									<i class="fi fi-rs-arrow-small-left"></i>
 									Back
@@ -53,7 +56,7 @@
 								{# <button class="btn btn-outline-secondary" id="increment-button">+</button> #}
 									<button type="button" onclick="updateQty(false)"> <i class="fi fi-rs-minuss"></i>
 								</button>
-								<input type="number" class="form-control" name="itemQuantity" id="qty-textbox" value="1" min="1">
+								<input type="number" class="form-control" name="itemQuantity" id="qty-textbox" value="1" min="1" max="10">
 								<button type="button" onclick="updateQty(true)">
 									<i class="fi fi-rs-plus"></i>
 								</button>
@@ -63,27 +66,123 @@
 						{# <input type="submit" class="add-to-cart add" value="Ajouter au panier"> #}
 						<button type="submit" class="add-to-cart add">
 							<i class="fi fi-rs-shopping-cart-add"></i>
-							Ajouter au panier
+							Add to cart
 						</button>
 					</form>
 				</div>
 			</main>
 
+
+
+			<script src="/js/utils.js"></script>
+
 			<script>
+
 				const qty = document.getElementById('qty-textbox');
 
-function updateQty(isInc) {
-let val = qty.value;
+				function updateQty(isInc) {
+					let val = qty.value;
 
-if (qty.value > 0 && qty.value <= 10) {
-if (isInc && qty.value < 10) {
-val = parseInt(qty.value) + 1;
-} else if (! isInc && qty.value > 1) {
-val = parseInt(qty.value) - 1;
-}
+					if (qty.value > 0 && qty.value <= 10) {
+						if (isInc && qty.value < 10) {
+							val = parseInt(qty.value) + 1;
+						} else if (! isInc && qty.value > 1) {
+							val = parseInt(qty.value) - 1;
+						}
 
-document.getElementById('qty-textbox').value = val;
-}
-}
+						document.getElementById('qty-textbox').value = val;
+					}
+				}
+
+
+				const checkEntries = (event) => {
+					event.preventDefault();
+
+					const qtyInput = document.getElementById('qty-textbox');
+
+
+					const qtyNum = Number(qtyInput.value);
+
+					
+					try {
+
+						if ((qtyInput.value != "" && qtyNum < 1 || qtyNum > 10)) {
+							throw "The quantity field should have a value comprise between 1 and 10";
+						} else if (isNaN(qtyInput.value)) {
+							throw "The value in the quantity field must only be a number";
+						}
+
+						document.querySelector('#add-to-cart-form').submit();
+
+					} catch (e) {
+						const toast = createToast(e);
+
+						document.body.innerHTML += toast;
+					}
+				}
+
+
+
+				setTimeout(function() {
+					$(document).ready(function() {
+						$lens = $('<div class="zoom-lens"></div>');
+						$zoomedImg = $('#zoomed-in-picture');
+						$('.image-container .miniature img').before($lens);
+
+						$cx = $('.main-image').width() / $lens.width();
+						$cy = $zoomedImg.height() / $lens.height();
+
+						$xSize = $('.image-container .miniature img').width() * $cx;
+						$ySize = $('.image-container .miniature img').height() * $cy;
+
+
+						$('#zoomed-in-picture').css({'background-image': 'url('+$('.main-image').attr('src')+')', 'background-size': $xSize + "px " + $ySize + "px", "width": $('.main-image').width()+"px"});
+
+						$('.image-container .miniature').on("mousemove", function(e) {
+							$x = $y = 0;
+
+							var imgPos = document.querySelector('.image-container .miniature').getBoundingClientRect();
+							var x = e.pageX;
+							var y = e.pageY;
+
+							/// Position lens in the middle of cursor
+							$lensHalfHeight = $lens.height() / 2;
+							$lensHalfWidth = $lens.width() / 2;
+
+							var xpos = x - imgPos.left;
+							var ypos = y - imgPos.top;
+
+							xpos = xpos - $lensHalfWidth;
+							ypos = ypos - $lensHalfHeight;
+
+							var xLimit = imgPos.right - x - $lensHalfWidth;
+							var yLimit = imgPos.bottom - y - $lensHalfHeight;
+
+							$xPicOffset = $xSize / $(this).find('img').width();
+							$yPicOffset = $ySize / $(this).find('img').height();
+							
+
+							if (xpos < 0) {xpos = 0;}
+							if (ypos < 0) {ypos = 0;}
+							if (xLimit < 0) {xpos = imgPos.right - imgPos.left - $lens.width() - 2;}
+							if (yLimit < 0) {ypos = imgPos.bottom - imgPos.top - $lens.height() - 2;}
+
+							$newXPos = - ($xPicOffset*xpos);
+							$newYpos = - ($yPicOffset*ypos);
+
+							$(this).find('.zoom-lens').css({'left': xpos, 'top': ypos});
+							$('#zoomed-in-picture').css('background-position', $newXPos+'px ' + $newYpos+'px');
+
+						}).on('mouseenter', function() {
+							$('.main-image').css('display', 'none');
+							$('#zoomed-in-picture').css('display', 'block');
+						}).on('mouseleave', function() {
+							$('.main-image').css('display', 'block');
+							$('#zoomed-in-picture').css('display', 'none');
+						});
+					});
+				}, 350)
 			</script>
+
+			
 		{% endblock %}

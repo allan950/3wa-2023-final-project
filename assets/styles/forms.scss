@@ -39,8 +39,15 @@ section.container {
                 text-align: left;
             }
 
-            input {
+            label + * {
                 margin-bottom: 1.325em;
+            }
+
+            label + span {
+                font-weight: 700;
+            }
+
+            input {
                 padding: .925em 1.75em;
             }
         }

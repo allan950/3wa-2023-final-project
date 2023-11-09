@@ -46,5 +46,32 @@
 			<div class="visual-design"></div>
 
 		</div>
+
+
+		<script src="{{ asset('/js/utils.js') }}"></script>
+
+		<script>
+			setTimeout(function() {
+				$(document).ready(function() {
+					$('form[name="registration_form"]').on('submit', function(e) {
+						e.preventDefault();
+
+						$username = $('#registration_form_email'), $pwd = $('#registration_form_plainPassword'), $checkbox = $('#registration_form_agreeTerms');
+
+						try {
+							if ($username.val().length < 1 || $pwd.val().length < 1) { throw "Both of the text fields should be filled up before signing in"; }
+							else if (!$checkbox.is(':checked')) { throw "You should agree to the terms of the store before submitting the form"; }
+
+							this.submit();
+						} catch(e) {
+							const toast = createToast(e);
+							$notification = $('body').append(toast);
+							
+							closeToast();
+						}
+					});
+				});
+			}, 1000);
+		</script>
 	</main>
 {% endblock %}

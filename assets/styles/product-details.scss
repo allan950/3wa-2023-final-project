@@ -11,11 +11,52 @@
         display: flex;
 
         .image-container {
+            position: relative;
             height: calc(100vh - 5em);
-            padding-right: 2.3em;
+            padding: 0 1.15em;
 
             img {
                 height: 100%;
+            }
+
+            #zoomed-in-picture {
+                height: 100%;
+                display: none;
+                background-repeat: no-repeat;
+            }
+
+            .miniature {
+                position: absolute;
+                opacity: 0;
+                cursor: move;
+                background-color: #fff;
+                width: 100px;
+                border: 1px #000 solid;
+                right: 8px;
+                bottom: 8px;
+                transition: opacity .4s;
+
+                .relative {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+
+                    img {
+                        width: 100%;
+                    }
+    
+                    .zoom-lens {
+                        position: absolute;
+                        border: 1px #000 solid;
+                        height: 30px;
+                        width: 30px;
+                        background-color: rgba(255, 255, 255, 0.6);
+                    }
+                }
+            }
+
+            &:hover .miniature {
+                opacity: 1;
             }
         }
 

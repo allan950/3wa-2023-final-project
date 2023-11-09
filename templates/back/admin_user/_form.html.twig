@@ -2,3 +2,32 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<script src="{{ asset('/js/utils.js') }}"></script>
+<script src="{{ asset('/js/objects.js') }}"></script>
+
+    <script>
+
+        setTimeout(function() {
+            const form = $('form[name="user"]'),
+            email = $('#user_email'),
+            last_name = $('#user_lastName'),
+            first_name = $('#user_firstName'),
+            address = $('#user_address'),
+            zipcode = $('#user_zipcode');
+
+            $(function() {
+                const user_form = new UserForm(form, email, last_name, first_name, address, zipcode);
+
+                form.on('submit', function(e) {
+                    e.preventDefault();
+
+                    user_form.verifyRequiredFields();
+                    
+                    if (user_form._is_form_submittable) {
+                        this.submit();
+                    }
+                });
+            });
+        }, 500);
+    </script>

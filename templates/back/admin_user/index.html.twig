@@ -25,18 +25,18 @@
 					</div>
 				</section>
 
-				<table class="table">
+				<table class="table" data-users="{{users_json}}">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Email</th>
-							<th>Roles</th>
-							<th>Last Name</th>
-							<th>First Name</th>
+							<th data-order="1" data-category="id">Id</th>
+							<th data-order="0" data-category="email">Email</th>
+							<th data-order="0" data-category="roles">Roles</th>
+							<th data-order="0" data-category="lastName">Last Name</th>
+							<th data-order="0" data-category="firstName">First Name</th>
 							<th></th>
 						</tr>
 						<tr class="filters">
-							<form action="{{ path('app_admin_user_list_search') }}">
+							<form id="form-filter" action="{{ path('app_admin_user_list_search') }}">
 								<th>
 									<input type="text" name="id" placeholder="">
 								</th>
@@ -109,4 +109,77 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="{{ asset('/js/utils.js') }}"></script>
+
+	<script>
+		setTimeout(function() {
+
+			$(function() {
+				const id = $('input[name="id"]'), email = $('input[name="email"]'), last_name = $('input[name="lname"]'), first_name = $('input[name="fname"]');
+				$users = $('.table').data('users');
+
+				$('.table th[data-category]').on('click', function() {
+					if ($users.length > 1) {
+						let sortedData = filterByCategory($users, $(this));
+						let sortedRows = "";
+						
+
+						sortedData.map(function(u) {
+							let roles = "";
+							if (u.roles) {
+
+								for (let i in u.roles ) {
+									if (u.roles[i] == "ROLE_ADMIN") {
+										roles += '<div class="badge"><span class="black">admin</span></div>';
+									} else if (u.roles[i] == "ROLE_USER") {
+										roles += '<div class="badge"><span class="green">user</span></div>';
+									} else {
+										roles += '<div class="badge"><span class="green">'+u.roles[i]+'</span></div>';
+									}
+								}
+							}
+
+							sortedRows += `
+							<tr>
+								<td>${ u.id }</td>
+								<td>${ u.email }</td>
+								<td>
+									${ roles }
+
+								</td>
+								<td>${ u.lastName == null ? "" : u.lastName }</td>
+								<td>${ u.firstName == null ? "" : u.firstName }</td>
+								<td class="actions">
+									<a href="/admin/user/${u.id}" title="Show details">
+                                    <i class="fi fi-rs-eye"></i>
+                                    </a>
+									<a href="/admin/user/${u.id}/edit" title="Edit">
+                                    <i class="fi fi-rs-pencil"></i>
+                                    </a>
+								</td>
+							</tr>
+						`;
+						});
+
+						$('.table tbody').html(sortedRows);
+					}
+				});
+
+				$('#form-filter').on('submit', function(e) {
+					e.preventDefault();
+
+					try {
+						if (id.val().length < 1 && email.val().length < 1 && last_name.val().length < 1 && first_name.val().length < 1) { throw "At least one of the fields in the filter has to be filled"; } 
+						else if (isNaN(id.val())) { throw "ID field value should be numeric!"; }
+
+						this.submit();
+					} catch (e) {
+						const toast = createToast(e);
+						$('body').append(toast);
+					}
+				});
+			});
+		}, 500);
+	</script>
 {% endblock %}

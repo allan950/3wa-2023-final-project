@@ -2,3 +2,28 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<script src="{{ asset('/js/utils.js') }}"></script>
+
+    <script>
+
+        setTimeout(function() {
+            const form = $('form[name="category"]'),
+            email = $('#category_label');
+
+            $(function() {
+
+                form.on('submit', function(e) {
+                    e.preventDefault();
+
+                    try {
+                        if (email.val().length < 1) { throw "Label field cannot be left empty"; }
+                        this.submit();
+                    } catch(e) {
+                        const toast = createToast(e);
+                        $('body').append(toast);
+                    }
+                });
+            });
+        }, 500);
+    </script>

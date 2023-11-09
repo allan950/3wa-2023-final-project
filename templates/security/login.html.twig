@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="spaced-out">
-				<form action="{{ path('app_login') }}" method="post">
+				<form id="login-form" action="{{ path('app_login') }}" method="post">
 					{% if error %}
 						<div class="flash notice">
 							<button onclick="this.parentElement.remove();">
@@ -65,5 +65,30 @@
 				</form>
 			</div>
 		</div>
+
+		<script src="{{ asset('/js/utils.js') }}"></script>
+
+		<script>
+			setTimeout(function() {
+				$(document).ready(function() {
+					$('#login-form').on('submit', function(e) {
+						e.preventDefault();
+
+						$username = $('#inputEmail'), $pwd = $('#inputPassword');
+
+						try {
+							if ($username.val().length < 1 || $pwd.val().length < 1) { throw "Both of the text fields should be filled up before loging in"; }
+
+							this.submit();
+						} catch(e) {
+							const toast = createToast(e);
+							$('body').append(toast);
+
+							closeToast();
+						}
+					});
+				});
+			}, 1000);
+		</script>
 	</main>
 {% endblock %}

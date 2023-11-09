@@ -2,3 +2,32 @@
     {{ form_widget(form) }}
     <button class="btn w100">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+
+<script src="{{ asset('/js/utils.js') }}"></script>
+<script src="{{ asset('/js/objects.js') }}"></script>
+
+    <script>
+
+        setTimeout(function() {
+            const form = $('form[name="product"]'),
+            name = $('#product_name'),
+            price = $('#product_price'),
+            anime = $('#product_anime'),
+            category = $('#product_category');
+
+            $(function() {
+                const product_form = new ProductForm(form, name, price, anime, category);
+
+                form.on('submit', function(e) {
+                    e.preventDefault();
+
+                    product_form.verifyRequiredFields();
+                    
+                    if (product_form._is_form_submittable) {
+                        this.submit();
+                    }
+                });
+            });
+        }, 500);
+    </script>

@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/admin/order')]
@@ -18,8 +22,19 @@ class AdminOrderController extends AbstractController
     #[Route('/', name: 'app_admin_order_index', methods: ['GET'])]
     public function index(OrderRepository $orderRepository): Response
     {
+        $orders = $orderRepository->findAll();
+
+        $encoder = new JsonEncoder();
+        $defaultContext = [ AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
+            return $object->getId();
+        }];
+
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+        $serializer = new Serializer([$normalizer], [$encoder]);
+
         return $this->render('back/admin_order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'orders' => $orders,
+            'orders_json' => $serializer->serialize($orders, 'json')
         ]);
     }
 
@@ -41,7 +56,7 @@ class AdminOrderController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_order_new', methods: ['GET', 'POST'])]
+    /* #[Route('/new', name: 'app_admin_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository): Response
     {
         $order = new Order();
@@ -54,11 +69,11 @@ class AdminOrderController extends AbstractController
             return $this->redirectToRoute('app_admin_order_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/admin_order/new.html.twig', [
+        return $this->render('back/admin_order/new.html.twig', [
             'order' => $order,
             'form' => $form,
         ]);
-    }
+    } */
 
     #[Route('/{id}', name: 'app_admin_order_show', methods: ['GET'])]
     public function show(Order $order): Response

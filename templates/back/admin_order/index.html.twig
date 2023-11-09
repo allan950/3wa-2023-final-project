@@ -28,18 +28,18 @@
 					</div>
 				</section>
 
-				<table class="table">
+				<table class="table" data-orders="{{orders_json}}">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Client</th>
-							<th>Order date</th>
-							<th>Subtotal price</th>
-							<th>Total price</th>
+							<th data-order="1" data-category="id">Id</th>
+							<th data-order="0" data-category="client">Client</th>
+							<th data-order="0" data-category="orderDate">Order date</th>
+							<th data-order="0" data-category="totalPriceHt">Subtotal price</th>
+							<th data-order="0" data-category="totalPriceTtc">Total price</th>
 							<th>actions</th>
 						</tr>
 						<tr class="filters">
-							<form action="{{ path('app_admin_order_list_search') }}">
+							<form id="form-filter" action="{{ path('app_admin_order_list_search') }}">
 								<th>
 									<input type="text" name="id" placeholder="">
 								</th>
@@ -100,4 +100,78 @@
 		</div>
 	</div>
 
+
+	<script src="{{ asset('/js/utils.js') }}"></script>
+	
+	<script>
+		setTimeout(function() {
+
+			function fixDigit(digit) {
+				if (digit <= 9) {
+					return "0"+digit;
+				}
+
+				return digit;
+			}
+
+			$(function() {
+				const id = $('input[name="id"]'), client = $('input[name="client"]'), subtotal_price = $('input[name="subtotal_price"]'), total_price = $('input[name="total_price"]');
+				$orders = $('.table').data('orders');
+
+				$('.table th[data-category]').on('click', function() {
+					if ($orders.length > 1) {
+						let sortedData = filterByCategory($orders, $(this));
+						let sortedRows = "";
+						
+
+						sortedData.map(function(o) {
+							let total = '€'+o.totalPriceTtc.toFixed(2);
+							let subtotal = '€'+o.totalPriceHt.toFixed(2);
+							let orderDate = "";
+							let formattedDate = "";
+							if (o.orderDate) {
+								let timestamp = o.orderDate.timestamp + "000";
+								timestamp = parseInt(timestamp);
+								orderDate = new Date(timestamp);
+								formattedDate = `${orderDate.getFullYear()}-${fixDigit(orderDate.getMonth()+1)}-${fixDigit(orderDate.getDate())} ${fixDigit(orderDate.getHours())}:${fixDigit(orderDate.getMinutes())}:${fixDigit(orderDate.getSeconds())}`;
+							}
+
+							sortedRows += `
+							<tr>
+								<td>${o.id}</td>
+								<td>${o.client.email ? o.client.email : o.email}</td>
+								<td>${formattedDate}</td >
+								<td>${subtotal}</td>
+								<td>${total}</td>
+								<td class="actions">
+									<a href="/admin/order/${o.id}" title="Show details">
+										<i class="fi fi-rs-eye"></i>
+									</a>
+								</td>
+							</tr>
+						`;
+						});
+
+						$('.table tbody').html(sortedRows);
+					}
+				});
+
+				$('#form-filter').on('submit', function(e) {
+					e.preventDefault();
+
+					try {
+						if (id.val().length < 1 && client.val().length < 1 && subtotal_price.val().length < 1 && total_price.val().length < 1) { throw "At least one of the fields in the filter has to be filled"; } 
+						else if (isNaN(id.val())) { throw "ID field value should be numeric!"; }
+						else if (isNaN(subtotal_price.val())) { throw "Subtotal field value should be numeric!"; }
+						else if (isNaN(total_price.val())) { throw "Total field value should be numeric!"; }
+
+						this.submit();
+					} catch (e) {
+						const toast = createToast(e);
+						$('body').append(toast);
+					}
+				});
+			});
+		}, 500);
+	</script>
 {% endblock %}

@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/admin/user')]
@@ -25,8 +29,18 @@ class AdminUserController extends AbstractController
     #[Route('/', name: 'app_admin_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+        $encoder = new JsonEncoder();
+        $defaultContext = [ AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function(object $object, string $format, array $context): string {
+            return $object->getEmail();
+        }];
+
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+        $serialize = new Serializer([$normalizer], [$encoder]);
+
         return $this->render('back/admin_user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'users_json' => $serialize->serialize($users, 'json')
         ]);
     }
 
