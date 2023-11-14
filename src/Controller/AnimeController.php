@@ -35,7 +35,7 @@ class AnimeController extends AbstractController
             return $this->redirectToRoute('app_admin_anime_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/admin_anime/new.html.twig', [
+        return $this->render('back/admin_anime/new.html.twig', [
             'anime' => $anime,
             'form' => $form,
         ]);
@@ -61,7 +61,7 @@ class AnimeController extends AbstractController
             return $this->redirectToRoute('app_admin_anime_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/admin_anime/edit.html.twig', [
+        return $this->render('back/admin_anime/edit.html.twig', [
             'anime' => $anime,
             'form' => $form,
         ]);

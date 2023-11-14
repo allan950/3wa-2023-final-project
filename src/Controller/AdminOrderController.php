@@ -95,7 +95,7 @@ class AdminOrderController extends AbstractController
             return $this->redirectToRoute('app_admin_order_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/admin_order/edit.html.twig', [
+        return $this->render('back/admin_order/edit.html.twig', [
             'order' => $order,
             'form' => $form,
         ]);
